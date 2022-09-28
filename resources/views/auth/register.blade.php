@@ -91,9 +91,20 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Registrasi Lembaga</title>
+    <title>Registrasi Kelembagaan</title>
 
-    <meta name="description" content="" />
+    <link rel="icon" type="image/x-icon" href="{{asset('tumbreg.jpeg')}}" />
+
+    <meta property="og:title" content="Kelembagaan Tilawati" style="text-transform: capitalize" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{asset('tumbreg.jpeg')}}" />
+    <meta property="og:description" content="Sistem informasi kelembagaan tilawati yang bertujuan untuk menghimpun seluruh lembaga untuk menjadi lembaga yang terstruktur dan terkoordinasi" />
+    <meta property="og:url" content="http://lembaga-tilawati.nurulfalah.org" />
+    <meta name="theme-color" content="#8CC0DE">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property='og:image:width' content='1200' />
+    <meta property='og:image:height' content='627' />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{asset('logo-nf.png')}}" />
