@@ -66,9 +66,9 @@
                                     <p class="mb-4">
                                         Anda dapat memanajemen struktur data lembaga anda dengan lebih mudah bersama kami
                                     </p>
-
+                                    <span id="lembaga_id">{{auth()->user()->lembagasurvey->id}}</span>
                                     <a href="javascript:;" class="btn btn-sm btn-outline-primary">Profile Lembaga</a>
-                                    <a href="javascript:;" class="btn btn-sm btn-outline-primary">Sertifikat Lembaga</a>
+                                    <a href="javascript:;" id="download_sertifikat" class="btn btn-sm btn-outline-primary">Sertifikat Lembaga</a>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                     <span>Murid/Santri</span>
-                                    <h3 class="card-title text-nowrap mb-4 mt-1">{{auth()->user()->lembagasurvey->santrilembaga->count()}}</h3>
+                                    <h3 class="card-title text-nowrap mb-4 mt-1" id="jumlah_murid">{{auth()->user()->lembagasurvey->santrilembaga->count()}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                                         </div>
                                     </div>
                                     <span>Guru/Pengajar</span>
-                                    <h3 class="card-title text-nowrap mb-4 mt-1">{{auth()->user()->lembagasurvey->gurulembaga->count()}}</h3>
+                                    <h3 class="card-title text-nowrap mb-4 mt-1" id="jumlah_guru">{{auth()->user()->lembagasurvey->gurulembaga->count()}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -159,7 +159,7 @@
                                     </div>
                                 </div>
                                 <div id="growthChart"></div>
-                                <div class="text-center fw-semibold pt-3 mb-2" ><span id="pertumbuhan">62% Company Growth</span></div>
+                                <div class="text-center fw-semibold pt-3 mb-2" ><span id="pertumbuhan">-</span></div>
 
                                 <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
                                     <div class="d-flex">
@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="d-flex flex-column">
                                             <small>{{date('Y') - 1}}</small>
-                                            <h6 class="mb-0" id="total_tahun_lalu">$32.5k</h6>
+                                            <h6 class="mb-0" id="total_tahun_lalu">-</h6>
                                         </div>
                                     </div>
                                     <div class="d-flex">
@@ -179,7 +179,7 @@
                                         </div>
                                         <div class="d-flex flex-column">
                                             <small>{{date('Y')}}</small>
-                                            <h6 class="mb-0" id="total_tahun_ini">$41.2k</h6>
+                                            <h6 class="mb-0" id="total_tahun_ini">-</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -301,7 +301,11 @@
         <script src="https://code.highcharts.com/modules/data.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
         <script>
             Highcharts.chart('container', {
                 data: {
@@ -331,15 +335,66 @@
                 }
             });
 
+            $('#download_sertifikat').on('click', function () {
+                // unduh sertifikat
+                var guru = $('#jumlah_guru').html();
+                var murid= $('#jumlah_murid').html();
+                var lembaga_id = $('#lembaga_id').html();
+                
+                if (guru == 0 && murid == 0) {
+                    swal({
+                        title: "PERHATIAN",
+                        text: 'sertifikat tersedia setelah lembaga mengisi data guru & santri',
+                        type: "error"
+                    });
+                }else{
+                    swal({
+                        title: "OK",
+                        text: 'Tekan OK untuk mengunduh Sertifikat',
+                        type: "success"
+                    }).then(okay => {
+                        if (okay) {
+                            window.location.href = "/download-sertifikat/"+lembaga_id;
+                        }
+                    });
+                }
+            })
+
+            $('#download_sertifikat2').on('click', function () {
+                // unduh sertifikat
+                var guru = $('#jumlah_guru').html();
+                var murid= $('#jumlah_murid').html();
+                var lembaga_id = $('#lembaga_id').html();
+                
+                if (guru == 0 && murid == 0) {
+                    swal({
+                        title: "PERHATIAN",
+                        text: 'sertifikat tersedia setelah lembaga mengisi data guru & santri',
+                        type: "error"
+                    });
+                }else{
+                    swal({
+                        title: "OK",
+                        text: 'Tekan OK untuk mengunduh Sertifikat',
+                        type: "success"
+                    }).then(okay => {
+                        if (okay) {
+                            window.location.href = "/download-sertifikat/"+lembaga_id;
+                        }
+                    });
+                }
+            })
+
             $(document).ready(function () { 
                 let cardColor, headingColor, axisColor, shadeColor, borderColor;
-                
 
                 cardColor = config.colors.white;
                 headingColor = config.colors.headingColor;
                 axisColor = config.colors.axisColor;
                 borderColor = config.colors.borderColor;
 
+
+                // chart & total grafisnya
                 var presentase;
                 $.ajax({
                     type:'GET',

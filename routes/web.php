@@ -50,4 +50,5 @@ Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::post('/import-template-santri',[ImportCont::class,'import_template_data_santri'])->name('import.santri');
 
     Route::get('/total_santri_guru_tahun_ini',[LembagaCont::class,'total_santri_guru_tahun_ini']);
+    Route::get('/download-sertifikat/{id}',[LembagaCont::class,'download_sertifikat']);
 });

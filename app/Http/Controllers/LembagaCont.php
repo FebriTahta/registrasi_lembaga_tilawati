@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Gurulembaga;
 use App\Models\Santrilembaga;
 use App\Models\Lembagasurvey;
+use QrCode;
+use PDF;
 use Illuminate\Http\Request;
 
 class LembagaCont extends Controller
@@ -83,5 +85,28 @@ class LembagaCont extends Controller
                 ]
             );
         }
+    }
+
+    public function download_sertifikat($id)
+    {
+        $lembaga = Lembagasurvey::findOrFail($id);
+
+        $date = \Carbon\Carbon::parse($lembaga->created_at)->locale('id');
+        $date->settings(['formatFunction' => 'translatedFormat']);
+        $no_sertifikat = $lembaga->sertifi_number.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
+
+        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/validasi-lembaga/'.$lembaga->sertifi_number));
+        $data = [
+            'nama_lembaga' => $lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga,
+            'alamat'    => $lembaga->alamat_lembaga,
+            'kabupaten' => $lembaga->kabupaten->nama_kabupaten,
+            'tanggal'   => $date->format('j F Y'),
+            'no'        => $no_sertifikat,
+            'qrcode'    => $qrcode,
+        ];
+          
+        $customPaper = array(0,0,865,612);
+    	$pdf = PDF::loadView('form.sertifikat', compact('data'))->setPaper($customPaper, 'portrait');
+    	return $pdf->stream('sertifikat.pdf','I');
     }
 }
