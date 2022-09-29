@@ -127,4 +127,9 @@ class LembagaCont extends Controller
     	$pdf = PDF::loadView('form.sertifikat', compact('data'))->setPaper($customPaper, 'portrait');
     	return $pdf->stream('sertifikat.pdf','I');
     }
+
+    public function profile_lembaga()
+    {
+        return view('page.profile');
+    }
 }

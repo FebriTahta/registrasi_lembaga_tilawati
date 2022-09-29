@@ -51,4 +51,5 @@ Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
 
     Route::get('/total_santri_guru_tahun_ini',[LembagaCont::class,'total_santri_guru_tahun_ini']);
     Route::get('/download-sertifikat/{id}',[LembagaCont::class,'download_sertifikat']);
+    Route::get('/profile-lembaga',[LembagaCont::class,'profile_lembaga']);
 });
