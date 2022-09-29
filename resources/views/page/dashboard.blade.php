@@ -66,7 +66,7 @@
                                     <p class="mb-4">
                                         Anda dapat memanajemen struktur data lembaga anda dengan lebih mudah bersama kami
                                     </p>
-                                    <span id="lembaga_id">{{auth()->user()->lembagasurvey->id}}</span>
+                                    <span id="lembaga_id" style="display: none">{{auth()->user()->lembagasurvey->id}}</span>
                                     <a href="javascript:;" class="btn btn-sm btn-outline-primary">Profile Lembaga</a>
                                     <a href="javascript:;" id="download_sertifikat" class="btn btn-sm btn-outline-primary">Sertifikat Lembaga</a>
                                 </div>
