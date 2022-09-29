@@ -93,7 +93,25 @@ class LembagaCont extends Controller
 
         $date = \Carbon\Carbon::parse($lembaga->created_at)->locale('id');
         $date->settings(['formatFunction' => 'translatedFormat']);
-        $no_sertifikat = $lembaga->sertifi_number.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
+        $id = 0;
+        if (strlen($lembaga->id) == 1) {
+            # code...
+            $id = '0000'.$lembaga->id.$lembaga->provinsi_id;
+        }elseif (strlen($lembaga->id) == 2) {
+            # code...
+            $id = '000'.$lembaga->id.$lembaga->provinsi_id;
+        }
+        elseif (strlen($lembaga->id) == 3) {
+            # code...
+            $id = '00'.$lembaga->id.$lembaga->provinsi_id;
+        }elseif (strlen($lembaga->id) == 4) {
+            # code...
+            $id = '0'.$lembaga->id.$lembaga->provinsi_id;
+        }elseif (strlen($lembaga->id) == 5) {
+            # code...
+            $id = $lembaga->id.$lembaga->provinsi_id;
+        }
+        $no_sertifikat = $id.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
 
         $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/validasi-lembaga/'.$lembaga->sertifi_number));
         $data = [

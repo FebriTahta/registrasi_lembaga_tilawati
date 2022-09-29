@@ -225,12 +225,12 @@
                 </a>
               </p>
               <hr>
-              <p class="text-left">
+              {{-- <p class="text-left">
                 <span>Lupa password ? </span>
                 <a href="/register">
                   <span>click here</span>
                 </a>
-              </p>
+              </p> --}}
             </div>
           </div>
           <!-- /Register -->
