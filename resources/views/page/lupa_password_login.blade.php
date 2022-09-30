@@ -256,16 +256,14 @@
               <p class="text-left">
                 <span>Lembaga Pengguna Metode Tilawati Baru ?</span>
                 <a href="/register">
-                  <span> buat akun</span>
+                  <span> Buat Akun Baru</span>
                 </a>
+                <span>/</span>
+                <a href="/login">
+                    <span> Login ke Lembaga</span>
+                  </a>
               </p>
               <hr>
-              <p class="text-left">
-                <span>Sudah mendaftar / Sudah memiliki akun ?</span>
-                <a href="/login">
-                  <span> Login ke Lembaga</span>
-                </a>
-              </p>
             </div>
           </div>
           <!-- /Register -->
