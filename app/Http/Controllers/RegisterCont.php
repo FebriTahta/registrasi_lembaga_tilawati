@@ -5,6 +5,7 @@ use App\Models\Kabupaten;
 use App\Models\Akseslembaga;
 use App\Models\Lembagasurvey;
 use Validator;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -100,6 +101,7 @@ class RegisterCont extends Controller
                             'kabupaten_id'      => $request->kabupaten_id,
                             'provinsi_id'       => $kabupaten->provinsi_id,
                             'akseslembaga_id'   => $akses->id,
+                            'slug_lembaga'      => Str::slug($request->nama_lembaga),
                         ]
                     );
                     
@@ -133,6 +135,7 @@ class RegisterCont extends Controller
                             'kabupaten_id'      => $request->kabupaten_id,
                             'provinsi_id'       => $kabupaten->provinsi_id,
                             'akseslembaga_id'   => $akses->id,
+                            'slug_lembaga'      => Str::slug($request->nama_lembaga),
                         ]
                     );
                 }

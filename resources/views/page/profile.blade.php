@@ -394,7 +394,7 @@
                                 type: "success"
                             }).then(okay => {
                                 if (okay) {
-                                    window.location.href = "/profile";
+                                    window.location.href = "/profile-lembaga";
                                 }
                             });
                         } else {

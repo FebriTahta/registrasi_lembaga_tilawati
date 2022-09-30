@@ -17,6 +17,8 @@ class CreateLembagasurveysTable extends Migration
             $table->id();
             $table->unsignedBigInteger('akseslembaga_id');
             $table->unsignedBigInteger('cabang_id')->nullable();
+            $table->string('kode')->nullable();
+            $table->string('slug_lembaga')->nullable();
             $table->string('anggota')->nullable();
             $table->string('status')->nullable();
             $table->unsignedBigInteger('kabupaten_id');

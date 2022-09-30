@@ -41,7 +41,7 @@
         <tbody>
             <tr></tr>
             <tr>
-                <td>Nama Lengkap + Gelar</td>
+                <td>Nama Lengkap</td>
                 <td>Tempat Lahir</td>
                 <td>Tanggal Lahir (Sesuai Format Pada Excel)</td>
                 <td>Ayah / Ibu / Lainnya</td>

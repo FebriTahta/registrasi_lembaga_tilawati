@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="col-md-4 mb-3 ">
                                     <div class="form-group">
-                                        <label for="telp_wali_santri">No. Telp (Whatsapp)</label>
+                                        <label for="telp_wali_santri">No. Telp (wali santri)</label>
                                         <input type="number" name="telp_wali_santri" class="form-control" required>
                                     </div>
                                 </div>
