@@ -107,10 +107,11 @@ class RegisterCont extends Controller
                         [
                             'phone' => $lembaga->telp_lembaga,
                             'message' => 
-                            '<p>*'.ucwords($lembaga->nama_lembaga).'*</p> <br>'.
-                            '<p>Selamat bergabung bersama lembaga Tilawati. berikut kami informasikan username & password lembaga anda. </p>'.
-                            '<br><span> username : '.$akses->username.'</span>'.
-                            '<br><span> password : '.$akses->pass.'</span>'.
+                            '<p>Selamat bergabung di dalam keluarga besar *METODE TILAWATI* </p>'.
+                            '<br><span>Kami harap dengan penerapan Pembelajaran Metode Tilawati di lembaga Ustadz/Ustadzah menjadikan mengaji santri kita lebih mudah dan menyenangkan. </span>'.
+                            '<p>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah</p>'.
+                            '<br><span>*username :* '.$akses->username.'</span>'.
+                            '<br><span>*password :* '.$akses->pass.'</span>'.
                             '<br><br><span>Login pada dashboard lembaga tilawati : </span><a href="https://lembaga-tilawati.nurulfalah.org">https://lembaga-tilawati.nurulfalah.org</a>',
 
                             'secret' => false, // or true

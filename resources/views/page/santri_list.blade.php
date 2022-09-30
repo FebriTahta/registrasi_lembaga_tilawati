@@ -138,6 +138,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script>
+        $('#download_sertifikat2').on('click', function() {
+                $.ajax({
+                    type:'GET',
+                    url:'/check-guru-dan-santri',
+                    success:function(response) {
+                        if (response.guru == 0 || response.santri == 0) {
+                            swal({
+                                title: "PERHATIAN",
+                                text: 'sertifikat tersedia setelah lembaga melakukan update data guru & santri',
+                                type: "error"
+                            });
+                        }else{
+                            swal({
+                                title: "OK",
+                                text: 'Tekan OK untuk mengunduh Sertifikat',
+                                type: "success"
+                            }).then(okay => {
+                                if (okay) {
+                                    window.location.href = "/download-sertifikat";
+                                }
+                            });
+                        }
+                    }
+                });
+            })
+
         $(document).ready(function () {
             $('#table_guru').DataTable({
                         destroy: true,

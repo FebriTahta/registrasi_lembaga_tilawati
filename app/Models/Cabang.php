@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Provinsi extends Model
+class Cabang extends Model
 {
     use HasFactory;
-    protected $table = "provinsi";
+    protected $table = 'cabangs';
 
     public function kabupaten()
     {
-        return $this->hasmany(Kabupaten::class);
+        return $this->belongsTo(Kabupaten::class);
     }
 
-    public function cabang()
+    public function provinsi()
     {
-        return $this->hasMany(Cabang::class);
+        return $this->belongsTo(Provinsi::class);
     }
 }

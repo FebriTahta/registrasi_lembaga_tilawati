@@ -29,6 +29,8 @@ Auth::routes();
 
 Route::get('/select-kabupaten-kota',[RegisterCont::class, 'fetch_kabupaten_kota']);
 Route::post('/registrasi-lembaga-baru',[RegisterCont::class, 'registrasi_lembaga']);
+Route::get('/lupa-password-login',[LembagaCont::class,'lupa_password_login']);
+Route::post('/lupa-username-pass',[LembagaCont::class,'lupa_username_pass']); 
 
 Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -50,6 +52,14 @@ Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::post('/import-template-santri',[ImportCont::class,'import_template_data_santri'])->name('import.santri');
 
     Route::get('/total_santri_guru_tahun_ini',[LembagaCont::class,'total_santri_guru_tahun_ini']);
-    Route::get('/download-sertifikat/{id}',[LembagaCont::class,'download_sertifikat']);
+    Route::get('/download-sertifikat',[LembagaCont::class,'download_sertifikat']);
     Route::get('/profile-lembaga',[LembagaCont::class,'profile_lembaga']);
+    Route::post('/update-lembaga',[LembagaCont::class,'update_lembaga']);
+    Route::get('/check-lembaga-cabang',[LembagaCont::class,'check_lembaga_cabang']);
+    Route::get('/check-lembaga-cabang-awal',[LembagaCont::class,'check_lembaga_cabang_awal']);
+    Route::post('/update-keanggotaan-cabang-lembaga',[LembagaCont::class,'update_keanggotaan_cabang_lembaga']);
+    Route::get('/check-guru-dan-santri',[LembagaCont::class,'check_guru_dan_santri']);
+
+    Route::post('/minta-username-password',[LembagaCont::class,'minta_username_password']);
+    
 });

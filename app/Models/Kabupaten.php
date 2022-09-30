@@ -14,4 +14,9 @@ class Kabupaten extends Model
     {
         return $this->belongsTo(Provinsi::class);
     }
+
+    public function cabang()
+    {
+        return $this->hasMany(Cabang::class);
+    }
 }

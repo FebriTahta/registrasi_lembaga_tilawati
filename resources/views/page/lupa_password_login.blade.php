@@ -166,9 +166,9 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Hai! 👋</h4>
-              <p>Selamat datang di sistem informasi manajemen lembaga tilawati</p>
-              <p class="mb-4">Silahkan login ke akun lembaga anda</p>
+              <h4 class="mb-2">Lupa Password</h4>
+              <p>Isi form berikut ini untuk memastikan bahwa anda adalah anggota lembaga</p>
+              <code>Username & Password akan dikirim melalui whatsapp ke nomor lembaga yang telah terdaftar</code>
               @if ($message = Session::get('error'))
               <div class="alert alert-danger alert-block" id="alert" style="display: block">
                   <button type="button" class="close btn btn-sm btn-danger" data-dismiss="alert" style="text-align: right">×</button>
@@ -176,61 +176,90 @@
               </div>
               @endif
             {{-- <form id="formAuthentication" class="mb-3" action="index.html" method="POST"> --}}
-             <form method="POST" action="{{ route('login') }}">@csrf
-                <div class="mb-3">
-                  <label for="email" class="form-label">Username</label>
+            <hr>
+             <form id="formlupapass">@csrf
+                <div class="mb-3 mt-3">
+                  <label for="email" class="form-label">Nama Lembaga</label>
                   <input
                     type="text"
                     class="form-control"
                     id="email"
-                    name="username"
-                    placeholder="Enter your email or username"
+                    name="nama_lembaga"
+                    placeholder="Nama Lembaga"
                     autofocus
                   />
                 </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                    {{-- <a href="auth-forgot-password-basic.html">
-                      <small>Forgot Password?</small>
-                    </a> --}}
-                  </div>
-                  <div class="input-group input-group-merge">
+                <div class="mb-3">
+                    <label for="telp_lembaga" class="form-label">No. Telp Yang Telah Didaftarkan</label>
                     <input
-                      type="password"
-                      id="password"
+                      type="number"
                       class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
+                      id="telp_lembaga"
+                      name="telp_lembaga"
+                      placeholder="Telp (Whatsapp) Lembaga"
+                      autofocus
                     />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
                 </div>
                 <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
+                    <label for="jenjang" class="form-label">Jenjang Pendidikan</label>
+                    <select name="jenjang_pendidikan" class="form-control" id="jenjang" required> 
+                        <option value="">Formal / Non Formal</option>
+                        <option value="formal">Formal</option>
+                        <option value="non_formal">Non Formal</option>
+                    </select>
                 </div>
+                <div class="mb-3" class="satuan_pendidikan_formal" id="satuan_pendidikan_formal" style="display: none">
+                    <label for="formal" class="form-label">Satuan Pendidikan Formal</label>
+                    <select name="satuan_pendidikan" class="form-control" >
+                        <option value="TK">Taman Kanak-kanak (TK)</option>
+                        <option value="RA">Raudatul Athfal (RA)</option>
+                        <option value="SD">Sekolah Dasar (SD)</option>
+                        <option value="MI">Madrasah Ibtidaiyah (MI)</option>
+                        <option value="SMP">Sekolah Menengah Pertama (SMP)</option>
+                        <option value="MTs">Madrasah Tsanawiyah (MTs)</option>
+                        <option value="SMA">Sekolah Menengah Atas (SMA)</option>
+                        <option value="MA">Madrasah Aliyah (MA)</option>
+                        <option value="SMK">Sekolah Menengah Kejuruan (SMK)</option>
+                        <option value="MAK">Madrasah Aliyah Kejuruan (MAK)</option>
+                        <option value="PT">Perguruan Tinggi</option>
+                        <option value="FORMAL-ETC">Lembaga Non Formal Lainnya</option>
+                    </select>
+                </div>
+                <div class="mb-3" class="satuan_pendidikan_non_formal" id="satuan_pendidikan_non_formal" style="display: none">
+                    <label for="non_formal" class="form-label">Satuan Pendidikan Non Formal</label>
+                    <select name="satuan_pendidikan" class="form-control" >
+                        <option value="KB">Kelompok Bermain (KB)</option>
+                        <option value="TPQ">Taman Pendidikan Al-Qur'an (TPQ)</option>
+                        <option value="MT">Majelis Ta'lim (MT)</option>
+                        <option value="BBAQ">Lembaga Kursus Baca Al-Qur'an (BBAQ)</option>
+                        <option value="PONPES">Pondok Pesantren (PONPES)</option>
+                        <option value="NON-FORMAL-ETC">Lembaga Non Formal Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" style="max-width: 100%">
+                    <p style="width:50%">{!! NoCaptcha::display() !!}</p>
+                    {!! NoCaptcha::renderJs() !!}
+                    @error('g-recaptcha-response')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                  {{-- <button class="btn btn-primary d-grid w-100" type="submit">Kirim Lupa Password</button> --}}
+                  <input type="submit" class="btn btn-primary d-grid w-100" id="btnlupapass" value="Kirim Lupa Password">
                 </div>
               </form>
-
+              <hr>
               <p class="text-left">
                 <span>Lembaga Pengguna Metode Tilawati Baru ?</span>
                 <a href="/register">
                   <span> buat akun</span>
                 </a>
               </p>
-              <hr>
-              <p class="text-left">
-                <span>Lupa password ? </span>
-                <a href="/lupa-password-login">
-                  <span>click here</span>
-                </a>
-              </p>
+              
             </div>
           </div>
           <!-- /Register -->
@@ -274,6 +303,82 @@
       $('.close').click(function () {
         document.getElementById("alert").style.display = "none"
       })
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $('#jenjang').on('change',function () {
+            if (this.value == 'formal') {
+                document.getElementById("satuan_pendidikan_formal").style.display = "block";
+                document.getElementById("satuan_pendidikan_non_formal").style.display = "none";
+            }
+            else if(this.value == '' || this.value == null)
+            {
+                document.getElementById("satuan_pendidikan_formal").style.display = "none"
+                document.getElementById("satuan_pendidikan_non_formal").style.display = "none"
+            }
+            else{
+                document.getElementById("satuan_pendidikan_formal").style.display = "none"
+                document.getElementById("satuan_pendidikan_non_formal").style.display = "block"
+            }
+        })
+
+        $('#formlupapass').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "/lupa-username-pass",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#btnlupapass').attr('disabled', 'disabled');
+                    $('#btnlupapass').val('Process...');
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $("#formlupapass")[0].reset();
+                        $('#btnlupapass').val('Kirim Lupa Password');
+                        $('#btnlupapass').attr('disabled', false);
+                        toastr.success(response.message);
+                        swal({
+                            title: "SUKSES!",
+                            text: response.message,
+                            type: "success"
+                        }).then(okay => {
+                            if (okay) {
+                                window.location.href = "/login";
+                            }
+                        });
+                    } else {
+                        
+                        $('#btnlupapass').val('Kirim Lupa Password');
+                        $('#btnlupapass').attr('disabled', false);
+                        toastr.error(response.message);
+                        swal({
+                            title: "MAAF!",
+                            text: response.message,
+                            type: "error"
+                        });
+                        $('#errList').html("");
+                        $('#errList').addClass('alert alert-danger');
+                        $.each(response.errors, function(key, err_values) {
+                            $('#errList').append('<div>' + err_values + '</div>');
+                        });
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
     </script>
   </body>
 </html>

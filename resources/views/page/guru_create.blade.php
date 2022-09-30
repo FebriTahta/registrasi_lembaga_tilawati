@@ -165,5 +165,31 @@
                 }
             });
         });
+
+        $('#download_sertifikat2').on('click', function() {
+                $.ajax({
+                    type:'GET',
+                    url:'/check-guru-dan-santri',
+                    success:function(response) {
+                        if (response.guru == 0 || response.santri == 0) {
+                            swal({
+                                title: "PERHATIAN",
+                                text: 'sertifikat tersedia setelah lembaga melakukan update data guru & santri',
+                                type: "error"
+                            });
+                        }else{
+                            swal({
+                                title: "OK",
+                                text: 'Tekan OK untuk mengunduh Sertifikat',
+                                type: "success"
+                            }).then(okay => {
+                                if (okay) {
+                                    window.location.href = "/download-sertifikat";
+                                }
+                            });
+                        }
+                    }
+                });
+            })
     </script>
 @endsection

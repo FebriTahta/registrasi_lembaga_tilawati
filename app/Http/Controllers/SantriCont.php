@@ -12,57 +12,69 @@ class SantriCont extends Controller
 {
     public function create_santri()
     {
-        return view('page.santri_create');
+        if (auth()->user()->lembagasurvey->bagian == null) {
+            # code...
+            return redirect('/home');
+        }else {
+            return view('page.santri_create');
+        }
+        
     }
 
     public function daftar_santri()
     {
-        $akses      = auth()->user()->id;
-        $lembaga    = Lembagasurvey::where('akseslembaga_id', $akses)->first();
-        if ($lembaga == null) {
+        if (auth()->user()->lembagasurvey->bagian == null) {
             # code...
-            return 'cari apa anda ini saudara ?';
+            return redirect('/home');
         }else {
-            # code...
-            if(request()->ajax())
-            {
-                $data   =   Santrilembaga::where('lembagasurvey_id', $lembaga->id);
-                            return DataTables::of($data)
-                        
-                            ->addColumn('tgllahir', function ($data) {
-                                if ($data->tanggal_lahir_santri !== null && $data->tanggal_lahir_santri !== '-') {
-                                    # code...
-                                    return $data->tempat_lahir_santri.' - '.\Carbon\Carbon::parse($data->tanggal_lahir_santri)->isoFormat('D MMMM Y');
-                                }else {
-                                    # code...
-                                    return $data->tempat_lahir_santri.' - ';
-                                };
-                            })
-                            ->addColumn('wali', function ($data) {
-                                if ($data->jenis_wali_santri == 'Ayah' || $data->jenis_wali_santri == 'Ibu' || $data->jenis_wali_santri == 'Lainnya'
-                                || $data->jenis_wali_santri == 'ayah' || $data->jenis_wali_santri == 'ibu' || $data->jenis_wali_santri == 'lainnya'
-                                || $data->jenis_wali_santri == 'AYAH' || $data->jenis_wali_santri == 'IBU' || $data->jenis_wali_santri == 'LAINNYA'
-                                || $data->jenis_wali_santri == ' Ayah' || $data->jenis_wali_santri == ' Ibu' || $data->jenis_wali_santri == ' Lainnya'
-                                || $data->jenis_wali_santri == ' ayah' || $data->jenis_wali_santri == ' ibu' || $data->jenis_wali_santri == ' lainnya'
-                                || $data->jenis_wali_santri == ' AYAH' || $data->jenis_wali_santri == ' IBU' || $data->jenis_wali_santri == ' LAINNYA'
-                                || $data->jenis_wali_santri == 'Ayah ' || $data->jenis_wali_santri == 'Ibu ' || $data->jenis_wali_santri == 'Lainnya '
-                                || $data->jenis_wali_santri == 'ayah ' || $data->jenis_wali_santri == 'ibu ' || $data->jenis_wali_santri == 'lainnya '
-                                || $data->jenis_wali_santri == 'AYAH ' || $data->jenis_wali_santri == 'IBU ' || $data->jenis_wali_santri == 'LAINNYA '
-                                || $data->jenis_wali_santri == ' Ayah ' || $data->jenis_wali_santri == ' Ibu ' || $data->jenis_wali_santri == ' Lainnya '
-                                || $data->jenis_wali_santri == ' ayah ' || $data->jenis_wali_santri == ' ibu ' || $data->jenis_wali_santri == ' lainnya '
-                                || $data->jenis_wali_santri == ' AYAH ' || $data->jenis_wali_santri == ' IBU ' || $data->jenis_wali_santri == ' LAINNYA '
-                                ) {
-                                    # code...
-                                    return $data->jenis_wali_santri. ' - '.$data->nama_wali_santri;
-                                }else{
-                                    return ' - '.$data->nama_wali_santri;
-                                }
-                            })
-                            ->rawColumns(['tgllahir','wali'])
-                            ->make(true);
+            $akses      = auth()->user()->id;
+            $lembaga    = Lembagasurvey::where('akseslembaga_id', $akses)->first();
+            if ($lembaga == null) {
+                # code...
+                return 'cari apa anda ini saudara ?';
+            }else {
+                # code...
+                if(request()->ajax())
+                {
+                    $data   =   Santrilembaga::where('lembagasurvey_id', $lembaga->id);
+                                return DataTables::of($data)
+                            
+                                ->addColumn('tgllahir', function ($data) {
+                                    if ($data->tanggal_lahir_santri !== null && $data->tanggal_lahir_santri !== '-') {
+                                        # code...
+                                        return $data->tempat_lahir_santri.' - '.\Carbon\Carbon::parse($data->tanggal_lahir_santri)->isoFormat('D MMMM Y');
+                                    }else {
+                                        # code...
+                                        return $data->tempat_lahir_santri.' - ';
+                                    };
+                                })
+                                ->addColumn('wali', function ($data) {
+                                    if ($data->jenis_wali_santri == 'Ayah' || $data->jenis_wali_santri == 'Ibu' || $data->jenis_wali_santri == 'Lainnya'
+                                    || $data->jenis_wali_santri == 'ayah' || $data->jenis_wali_santri == 'ibu' || $data->jenis_wali_santri == 'lainnya'
+                                    || $data->jenis_wali_santri == 'AYAH' || $data->jenis_wali_santri == 'IBU' || $data->jenis_wali_santri == 'LAINNYA'
+                                    || $data->jenis_wali_santri == ' Ayah' || $data->jenis_wali_santri == ' Ibu' || $data->jenis_wali_santri == ' Lainnya'
+                                    || $data->jenis_wali_santri == ' ayah' || $data->jenis_wali_santri == ' ibu' || $data->jenis_wali_santri == ' lainnya'
+                                    || $data->jenis_wali_santri == ' AYAH' || $data->jenis_wali_santri == ' IBU' || $data->jenis_wali_santri == ' LAINNYA'
+                                    || $data->jenis_wali_santri == 'Ayah ' || $data->jenis_wali_santri == 'Ibu ' || $data->jenis_wali_santri == 'Lainnya '
+                                    || $data->jenis_wali_santri == 'ayah ' || $data->jenis_wali_santri == 'ibu ' || $data->jenis_wali_santri == 'lainnya '
+                                    || $data->jenis_wali_santri == 'AYAH ' || $data->jenis_wali_santri == 'IBU ' || $data->jenis_wali_santri == 'LAINNYA '
+                                    || $data->jenis_wali_santri == ' Ayah ' || $data->jenis_wali_santri == ' Ibu ' || $data->jenis_wali_santri == ' Lainnya '
+                                    || $data->jenis_wali_santri == ' ayah ' || $data->jenis_wali_santri == ' ibu ' || $data->jenis_wali_santri == ' lainnya '
+                                    || $data->jenis_wali_santri == ' AYAH ' || $data->jenis_wali_santri == ' IBU ' || $data->jenis_wali_santri == ' LAINNYA '
+                                    ) {
+                                        # code...
+                                        return $data->jenis_wali_santri. ' - '.$data->nama_wali_santri;
+                                    }else{
+                                        return ' - '.$data->nama_wali_santri;
+                                    }
+                                })
+                                ->rawColumns(['tgllahir','wali'])
+                                ->make(true);
+                }
             }
+            return view('page.santri_list');
         }
-        return view('page.santri_list');
+        
     }
 
     public function store_santri(Request $request)

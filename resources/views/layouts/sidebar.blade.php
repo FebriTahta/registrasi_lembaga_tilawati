@@ -74,7 +74,20 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src=" {{asset('assets/js/config.js')}}"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
+    <style>
+        .select2-container--default .select2-selection--single{
+            padding:6px;
+            height: 40px;
+            width: 100%; 
+            font-size: 15px;  
+            position: relative;
+            border: 0.1;
+        }
+        span.select2-selection--single[aria-expanded=true] {
+            border-color: blue !important;   
+        }
+    </style>
     @yield('style')
   </head>
 
@@ -118,6 +131,25 @@
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Manajemen Guru</div>
               </a>
+              @if (auth()->user()->lembagasurvey->bagian == null)
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#modalcabang" class="menu-link">
+                    <div data-i18n="Account">Daftar Guru</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#modalcabang" class="menu-link">
+                    <div data-i18n="Notifications">Tambah Guru</div>
+                  </a>
+                </li>
+                {{-- <li class="menu-item">
+                  <a href="/import-data-guru" class="menu-link">
+                    <div data-i18n="Connections">Import Data Guru</div>
+                  </a>
+                </li> --}}
+              </ul>
+              @else
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="/daftar-guru" class="menu-link">
@@ -135,12 +167,29 @@
                   </a>
                 </li> --}}
               </ul>
+              @endif
+
+              
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
                 <div data-i18n="Authentications">Manajemen Santri</div>
               </a>
+              @if (auth()->user()->lembagasurvey->bagian == null)
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#modalcabang" class="menu-link">
+                    <div data-i18n="Basic">Daftar Santri</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#modalcabang" class="menu-link">
+                    <div data-i18n="Basic">Tambah Santri</div>
+                  </a>
+                </li>
+              </ul>
+              @else
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="/daftar-santri" class="menu-link">
@@ -153,16 +202,25 @@
                   </a>
                 </li>
               </ul>
+              @endif
+              
             </li>
             
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
            
 
             <li class="menu-item">
+              @if (auth()->user()->lembagasurvey->bagian == null)
+              <a href="#" data-bs-toggle="modal" data-bs-target="#modalcabang" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <div data-i18n="Boxicons">Profile Lembaga</div>
+              </a>
+              @else
               <a href="/profile-lembaga" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-crown"></i>
                 <div data-i18n="Boxicons">Profile Lembaga</div>
               </a>
+              @endif
             </li>
 
             

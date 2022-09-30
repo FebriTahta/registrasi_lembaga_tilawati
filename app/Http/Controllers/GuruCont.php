@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Gurulembaga;
+use App\Models\Cabang;
 use App\Models\Lembagasurvey;
 use Validator;
 use Carbon;
@@ -12,7 +13,15 @@ class GuruCont extends Controller
 {
     public function create_guru()
     {
-        return view('page.guru_create');
+        if (auth()->user()->lembagasurvey->bagian == null) {
+            # code...
+            return redirect('/home');
+        }else {
+            $kabupaten_id = auth()->user()->lembagasurvey->kabupaten_id;
+            $cabang = Cabang::where('kabupaten_id', $kabupaten_id)->where('name','!=','Tilawati Pusat')->get();
+            return view('page.guru_create',compact('cabang'));
+        }
+        
     }
 
     public function import_guru()
@@ -22,35 +31,42 @@ class GuruCont extends Controller
 
     public function daftar_guru(Request $request)
     {
-        $akses      = auth()->user()->id;
-        $lembaga    = Lembagasurvey::where('akseslembaga_id', $akses)->first();
-        if ($lembaga == null) {
+        if (auth()->user()->lembagasurvey->bagian == null) {
             # code...
-            return 'cari apa anda ini saudara ?';
+            return redirect('/home');
         }else {
             # code...
-            if(request()->ajax())
-            {
-                $data   =   Gurulembaga::where('lembagasurvey_id', $lembaga->id);
-                            return DataTables::of($data)
-                        
-                            ->addColumn('tgllahir', function ($data) {
-                                if ($data->tanggal_lahir_guru !== null) {
-                                    # code...
-                                    return $data->tempat_lahir_guru.' - '.\Carbon\Carbon::parse($data->tanggal_lahir_guru)->isoFormat('D MMMM Y');
-                                }else {
-                                    # code...
-                                    return $data->tempat_lahir_guru.' - ';
-                                };
-                            })
-                            ->rawColumns(['tgllahir'])
-                            ->make(true);
+            $akses      = auth()->user()->id;
+            $lembaga    = Lembagasurvey::where('akseslembaga_id', $akses)->first();
+            if ($lembaga == null) {
+                # code...
+                return 'cari apa anda ini saudara ?';
+            }else {
+                # code...
+                if(request()->ajax())
+                {
+                    $data   =   Gurulembaga::where('lembagasurvey_id', $lembaga->id);
+                                return DataTables::of($data)
+                            
+                                ->addColumn('tgllahir', function ($data) {
+                                    if ($data->tanggal_lahir_guru !== null) {
+                                        # code...
+                                        return $data->tempat_lahir_guru.' - '.\Carbon\Carbon::parse($data->tanggal_lahir_guru)->isoFormat('D MMMM Y');
+                                    }else {
+                                        # code...
+                                        return $data->tempat_lahir_guru.' - ';
+                                    };
+                                })
+                                ->rawColumns(['tgllahir'])
+                                ->make(true);
+                }
             }
+            
+            
+            $kabupaten_id = auth()->user()->lembagasurvey->kabupaten_id;
+            $cabang = Cabang::where('kabupaten_id', $kabupaten_id)->where('name','!=','Tilawati Pusat')->get();
+            return view('page.guru_list',compact('cabang'));
         }
-        
-        
-
-        return view('page.guru_list');
     }
 
     public function store_guru(Request $request)
