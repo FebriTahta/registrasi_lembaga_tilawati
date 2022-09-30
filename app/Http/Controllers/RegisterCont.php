@@ -67,37 +67,77 @@ class RegisterCont extends Controller
                 $pool2   = '9876543210';
                 $acak1   = substr(str_shuffle(str_repeat($pool1, 5)), 0, 3);
                 $acak2   = substr(str_shuffle(str_repeat($pool2, 5)), 0, 3);
+                $acak3   = substr(str_shuffle(str_repeat($pool2, 5)), 0, 5);
 
                 $kabupaten = Kabupaten::findOrFail($request->kabupaten_id);
+                $lembaga_exist_kode = Lembagasurvey::where('kode',$acak3)->first();
+                if ($lembaga_exist_kode == null) {
+                    # code...
+                    $akses  = Akseslembaga::updateOrCreate(
+                        [
+                            'id'=>$request->id
+                        ],
+                        [
+                            'role'      => 'lembaga',
+                            'username'  => $request->nama_lembaga,
+                            'pass'      => 'lmb-'.$acak1.'-'.$acak2,
+                            'password'  => Hash::make('lmb-'.$acak1.'-'.$acak2),
+                            
+                        ]
+                    );
+    
+                    $lembaga = Lembagasurvey::updateOrCreate(
+                        [
+                            'id'=>$request->id
+                        ],
+                        [
+                            'kode'              => $acak3,
+                            'nama_lembaga'      => $request->nama_lembaga,
+                            'alamat_lembaga'    => $request->alamat_lembaga,
+                            'telp_lembaga'      => $request->telp_lembaga,
+                            'jenjang_pendidikan'=> $request->jenjang_pendidikan,
+                            'satuan_pendidikan' => $request->satuan_pendidikan,
+                            'kabupaten_id'      => $request->kabupaten_id,
+                            'provinsi_id'       => $kabupaten->provinsi_id,
+                            'akseslembaga_id'   => $akses->id,
+                        ]
+                    );
+                    
+                }else {
+                    # code...
+                    $acak3   = substr(str_shuffle(str_repeat($pool2, 5)), 0, 5);
+                    $akses  = Akseslembaga::updateOrCreate(
+                        [
+                            'id'=>$request->id
+                        ],
+                        [
+                            'role'      => 'lembaga',
+                            'username'  => $request->nama_lembaga,
+                            'pass'      => 'lmb-'.$acak1.'-'.$acak2,
+                            'password'  => Hash::make('lmb-'.$acak1.'-'.$acak2),
+                            
+                        ]
+                    );
+    
+                    $lembaga = Lembagasurvey::updateOrCreate(
+                        [
+                            'id'=>$request->id
+                        ],
+                        [
+                            'kode'              => $acak3,
+                            'nama_lembaga'      => $request->nama_lembaga,
+                            'alamat_lembaga'    => $request->alamat_lembaga,
+                            'telp_lembaga'      => $request->telp_lembaga,
+                            'jenjang_pendidikan'=> $request->jenjang_pendidikan,
+                            'satuan_pendidikan' => $request->satuan_pendidikan,
+                            'kabupaten_id'      => $request->kabupaten_id,
+                            'provinsi_id'       => $kabupaten->provinsi_id,
+                            'akseslembaga_id'   => $akses->id,
+                        ]
+                    );
+                }
 
-                $akses  = Akseslembaga::updateOrCreate(
-                    [
-                        'id'=>$request->id
-                    ],
-                    [
-                        'role'      => 'lembaga',
-                        'username'  => $request->nama_lembaga,
-                        'pass'      => 'lmb-'.$acak1.'-'.$acak2,
-                        'password'  => Hash::make('lmb-'.$acak1.'-'.$acak2),
-                        
-                    ]
-                );
-
-                $lembaga = Lembagasurvey::updateOrCreate(
-                    [
-                        'id'=>$request->id
-                    ],
-                    [
-                        'nama_lembaga'      => $request->nama_lembaga,
-                        'alamat_lembaga'    => $request->alamat_lembaga,
-                        'telp_lembaga'      => $request->telp_lembaga,
-                        'jenjang_pendidikan'=> $request->jenjang_pendidikan,
-                        'satuan_pendidikan' => $request->satuan_pendidikan,
-                        'kabupaten_id'      => $request->kabupaten_id,
-                        'provinsi_id'       => $kabupaten->provinsi_id,
-                        'akseslembaga_id'   => $akses->id,
-                    ]
-                );
+                
 
                 set_time_limit(0);
                 $curl = curl_init();

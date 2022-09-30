@@ -9,7 +9,7 @@ class Lembagasurvey extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'cabang_id','kabupaten_id','nama_lembaga','telp_lembaga','alamat_lembaga','jenjang_pendidikan','satuan_pendidikan','akseslembaga_id','provinsi_id','bagian','anggota','status','updated_at','created_at'
+        'kode','cabang_id','kabupaten_id','nama_lembaga','telp_lembaga','alamat_lembaga','jenjang_pendidikan','satuan_pendidikan','akseslembaga_id','provinsi_id','bagian','anggota','status','updated_at','created_at'
     ];
 
     public function cabang()
