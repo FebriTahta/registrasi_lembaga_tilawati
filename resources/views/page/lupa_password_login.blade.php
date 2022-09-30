@@ -259,7 +259,13 @@
                   <span> buat akun</span>
                 </a>
               </p>
-              
+              <hr>
+              <p class="text-left">
+                <span>Sudah mendaftar / Sudah memiliki akun ?</span>
+                <a href="/login">
+                  <span> Login ke Lembaga</span>
+                </a>
+              </p>
             </div>
           </div>
           <!-- /Register -->
