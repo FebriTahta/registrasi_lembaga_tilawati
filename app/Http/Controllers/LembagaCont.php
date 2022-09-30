@@ -31,7 +31,7 @@ class LembagaCont extends Controller
 
             // usia santri
             $semua_santri_usia_valid = Santrilembaga::where('lembagasurvey_id', auth()->user()->lembagasurvey->id)->where('tanggal_lahir_santri', '!=' , null)->where('tanggal_lahir_santri', '!=', '-')->get();
-            $semua_santri_usia_non_valid = Santrilembaga::where('lembagasurvey_id', auth()->user()->lembagasurvey->id)->where('tanggal_lahir_santri', null)->orWhere('tanggal_lahir_santri','-')->count();
+            $semua_santri_usia_non_valid = Santrilembaga::where('lembagasurvey_id', auth()->user()->lembagasurvey->id)->where('tanggal_lahir_santri','-')->count();
             $anak = [];
             $remaja = [];
             $dewasa = [];
