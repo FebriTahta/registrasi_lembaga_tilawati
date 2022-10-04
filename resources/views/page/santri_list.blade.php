@@ -214,7 +214,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="telp_guru" class="mb-1" style="font-weight: bold">No. Telp (Wali Santri)</label>
-                                        <input type="text" class="form-control" id="telp_wali_santri" name="telp_wali_santri">
+                                        <input type="number" class="form-control" id="telp_wali_santri" name="telp_wali_santri">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

@@ -206,7 +206,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="telp_guru" class="mb-1" style="font-weight: bold">TELP GURU</label>
-                                <input type="text" class="form-control" id="telp_guru" name="telp_guru">
+                                <input type="number" class="form-control" id="telp_guru" name="telp_guru">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="alamat_guru" class="mb-1" style="font-weight: bold">ALAMAT GURU</label>
