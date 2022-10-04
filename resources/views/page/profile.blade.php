@@ -247,6 +247,7 @@
 @endsection
 
 @section('script')
+<script src=" {{asset('assets/vendor/js/bootstrap.js')}}"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
