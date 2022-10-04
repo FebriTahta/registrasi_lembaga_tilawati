@@ -82,12 +82,12 @@
                             <table id="table_guru" class="table table-bordered table-hover" style="max-width: 100%; margin-bottom:20px">
                                 <thead style="margin-top: 20px">
                                     <tr>
-                                        <th style="width: 5%">No</th>
+                                        <th style="width: 7%">No</th>
                                         <th>Nama</th>
                                         <th>Tanggal Lahir</th>
                                         <th>Wali Santri</th>
                                         <th>Nomor Wali</th>
-                                        
+                                        <th style="width: 13%">Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-capitalize"></tbody>
@@ -125,6 +125,119 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade bs-example-modal-diklat-kirim" id="modalhapus" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: rgb(253, 147, 147)">
+                        <h5 class="modal-title mt-0 text-white">HAPUS DATA SANTRI </h5>
+                        <a href="#" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p>Apakah anda yakin akan menghapus SANTRI</p>
+                            <span>ATAS NAMA : </span><span id="nama_santri"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="modal-footer">
+                        <form id="formhapus">@csrf
+                            <input type="hidden" name="id" id="id">
+                            <button type="button" id="btnclose" class="close btn btn-secondary">close</button>
+                            <input type="submit" id="btnhapus" class="btn btn-danger" value="hapus">
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade bs-example-modal-diklat-kirim" id="modallihat" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: rgb(36, 128, 165)">
+                        <h5 class="modal-title mt-0 text-white">DETAIL DATA SANTRI </h5>
+                        <a href="#" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
+                    <form id="formsubmit"> @csrf
+                        <div class="modal-body">
+                            <div class="form-group mb-3">
+                                <label for="nama_guru" class="mb-1" style="font-weight: bold">Nama Santri</label>
+                                <input type="text" class="form-control" id="nama_santri2" name="nama_santri">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="tempat_lahir_guru" class="mb-1" style="font-weight: bold">Tempat Lahir Santri</label>
+                                        <input type="text" class="form-control" id="tempat_lahir_santri" name="tempat_lahir_santri">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3" >
+                                        <label for="tanggal_lahir_guru" class="mb-1" style="font-weight: bold">Tanggal Lahir Santri</label>
+                                        <input type="date" class="form-control" id="tanggal_lahir_santri" name="tanggal_lahir_santri" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3 ">
+                                    <div class="form-group">
+                                        <label for="telp_guru" style="font-weight: bold">Wali Santri</label>
+                                        <div class="col-md">
+                                            <div class="form-check form-check-inline mt-3">
+                                              <input class="form-check-input" type="radio" name="jenis_wali_santri" id="ayah" value="ayah" required>
+                                              <label class="form-check-label" for="inlineRadio1">Ayah </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio" name="jenis_wali_santri" id="ibu" value="ibu" required>
+                                              <label class="form-check-label" for="inlineRadio2">Ibu </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="jenis_wali_santri" id="lainnya" value="lainnya" required>
+                                                <label class="form-check-label" for="inlineRadio3">Selain Ayah & Ibu </label>
+                                              </div>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group mb-3">
+                                        <label for="nama_wali_santri" class="mb-1" style="font-weight: bold">Nama Wali Santri</label>
+                                        <input type="text" class="form-control" id="nama_wali_santri" name="nama_wali_santri">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="telp_guru" class="mb-1" style="font-weight: bold">No. Telp (Wali Santri)</label>
+                                        <input type="text" class="form-control" id="telp_wali_santri" name="telp_wali_santri">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="alamat_guru" class="mb-1" style="font-weight: bold">Alamat Santri</label>
+                                        <textarea name="alamat_santri" id="alamat_santri" class="form-control" cols="30" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="hidden" class="form-control" name="id" id="id2">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                            <button type="button" id="btnclose" class="close btn btn-secondary">close</button>
+                            <input type="submit" id="btnsubmit" class="btn btn-primary" value="update">
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 @endsection
 
@@ -138,6 +251,37 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script>
+        $('#modallihat').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('id')
+                var nama_santri = button.data('nama')
+                var tanggal_lahir_santri = button.data('tanggal')
+                var tempat_lahir_santri = button.data('tempat')
+                var alamat_santri = button.data('alamat')
+                var telp_wali_santri = button.data('telp')
+                var nama_wali_santri = button.data('nama_wali')
+                var jenis_wali_santri = button.data('jenis')
+                var modal = $(this)
+                $('#nama_santri2').val(nama_santri);
+                $('#tanggal_lahir_santri').val(tanggal_lahir_santri);
+                $('#tempat_lahir_santri').val(tempat_lahir_santri);
+                $('#alamat_santri').val(alamat_santri);
+                $('#telp_wali_santri').val(telp_wali_santri);
+                $('#id2').val(id);
+                $('#nama_wali_santri').val(nama_wali_santri);
+                console.log(nama_wali_santri);
+                if (jenis_wali_santri == 'ayah') {
+                    var ayah = document.getElementById("ayah");
+                    ayah.checked = true;
+                }else if(jenis_wali_santri == 'ibu'){
+                    var ibu = document.getElementById("ibu");
+                    ibu.checked = true;
+                }else{
+                    var lainnya = document.getElementById("lainnya");
+                    lainnya.checked = true;
+                }
+            })
+
         $('#download_sertifikat2').on('click', function() {
                 $.ajax({
                     type:'GET',
@@ -196,9 +340,130 @@
                             data:'telp_wali_santri',
                             name:'telp_wali_santri'
                             },
+
+                            {
+                            data:'opsi',
+                            name:'opsi'
+                            },
                             
                         ]
                     });
         })
+
+        $('#modalhapus').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('id')
+                var nama_santri = button.data('nama')
+                var modal = $(this)
+                $('#nama_santri').html(nama_santri);
+                $('#id').val(id);
+            })
+
+        $('#formhapus').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "/remove-santri",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#btnhapus').attr('disabled', 'disabled');
+                    $('#btnhapus').val('Process...');
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $("#formhapus")[0].reset();
+                        $('#btnhapus').val('Daftar');
+                        $('#btnhapus').attr('disabled', false);
+                        $('#modalhapus').modal('hide');
+                        var oTable = $('#table_guru').dataTable();
+                        oTable.fnDraw(false);
+                        toastr.success(response.message);
+                        swal({
+                            title: "SUKSES!",
+                            text: response.message,
+                            type: "success"
+                        });
+                    } else {
+                        $('#modalhapus').modal('hide');
+                        $('#btnhapus').val('Daftar');
+                        $('#btnhapus').attr('disabled', false);
+                        toastr.error(response.message);
+                        swal({
+                            title: "OOPS SORRY!",
+                            text: response.message,
+                            type: "error"
+                        });
+                        $('#errList').html("");
+                        $('#errList').addClass('alert alert-danger');
+                        $.each(response.errors, function(key, err_values) {
+                            $('#errList').append('<div>' + err_values + '</div>');
+                        });
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        $('.close').on('click',function () {
+            $('#modalhapus').modal('hide');
+            $('#modallihat').modal('hide');
+        });
+
+        $('#formsubmit').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "/update-santri",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#btnsubmit').attr('disabled', 'disabled');
+                    $('#btnsubmit').val('Process...');
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $("#formsubmit")[0].reset();
+                        $('#btnsubmit').val('Daftar');
+                        $('#btnsubmit').attr('disabled', false);
+                        $('#modallihat').modal('hide');
+                        var oTable = $('#table_guru').dataTable();
+                        oTable.fnDraw(false);
+                        toastr.success(response.message);
+                        swal({
+                            title: "SUKSES!",
+                            text: response.message,
+                            type: "success"
+                        });
+                    } else {
+                        $('#modallihat').modal('hide');
+                        $('#btnsubmit').val('Daftar');
+                        $('#btnsubmit').attr('disabled', false);
+                        toastr.error(response.message);
+                        swal({
+                            title: "OOPS SORRY!",
+                            text: response.message,
+                            type: "error"
+                        });
+                        $('#errList').html("");
+                        $('#errList').addClass('alert alert-danger');
+                        $.each(response.errors, function(key, err_values) {
+                            $('#errList').append('<div>' + err_values + '</div>');
+                        });
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
     </script>    
 @endsection

@@ -39,11 +39,15 @@ Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::get('/create-new-guru',[GuruCont::class,'create_guru']);
     Route::post('/store-guru',[GuruCont::class,'store_guru']);
     Route::get('/daftar-guru',[GuruCont::class,'daftar_guru']);
+    Route::post('/remove-guru',[GuruCont::class,'remove_guru']);
+    Route::post('/update-guru',[GuruCont::class,'update_guru']);
     
     //santri
     Route::get('/create-new-santri',[SantriCont::class,'create_santri']);
     Route::post('/store-santri',[SantriCont::class,'store_santri']);
     Route::get('/daftar-santri',[SantriCont::class,'daftar_santri']);
+    Route::post('/remove-santri',[SantriCont::class,'remove_santri']);
+    Route::post('/update-santri',[SantriCont::class,'update_santri']);
 
     //export
     Route::get('/export-template-guru',[ExportCont::class,'export_template_guru']);

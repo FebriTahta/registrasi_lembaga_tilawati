@@ -46,7 +46,7 @@ class ImportTemplateGuru implements ToCollection,SkipsOnError, SkipsOnFailure
                     $tgllahir = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[3]);
                 }else {
                     # code...
-                    $tgllahir="";
+                    $tgllahir="-";
                 }
 
                 $id = 0;

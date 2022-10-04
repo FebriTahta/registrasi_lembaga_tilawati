@@ -102,11 +102,11 @@
                                 <table id="table_guru" class="table table-bordered table-hover" style="max-width: 100%">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5%">No</th>
+                                            <th style="width: 7%">No</th>
                                             <th>Nama</th>
                                             <th>Telp</th>
                                             <th>Tanggal Lahir</th>
-                                            <th>Alamat</th>
+                                            <th style="width: 13%">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-capitalize"></tbody>
@@ -142,6 +142,84 @@
                         </div>
                         <div class="modal-footer">
                             <input type="submit" class="btn btn-primary" value="SUBMIT">
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade bs-example-modal-diklat-kirim" id="modalhapus" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: rgb(253, 147, 147)">
+                        <h5 class="modal-title mt-0 text-white">HAPUS DATA GURU </h5>
+                        <a href="#" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p>Apakah anda yakin akan menghapus GURU</p>
+                            <span>ATAS NAMA : </span><span id="nama_guru"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="modal-footer">
+                        <form id="formhapus">@csrf
+                            <input type="hidden" name="id" id="id">
+                            <button type="button" id="btnclose" class="close btn btn-secondary">close</button>
+                            <input type="submit" id="btnhapus" class="btn btn-danger" value="hapus">
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade bs-example-modal-diklat-kirim" id="modallihat" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: rgb(36, 128, 165)">
+                        <h5 class="modal-title mt-0 text-white">DETAIL DATA GURU </h5>
+                        <a href="#" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
+                    <form id="formsubmit"> @csrf
+                        <div class="modal-body">
+                            <div class="form-group mb-3">
+                                <label for="nama_guru" class="mb-1" style="font-weight: bold">NAMA</label>
+                                <input type="text" class="form-control" id="nama_guru2" name="nama_guru">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="tempat_lahir_guru" class="mb-1" style="font-weight: bold">TEMPAT LAHIR</label>
+                                <input type="text" class="form-control" id="tempat_lahir_guru" name="tempat_lahir_guru">
+                            </div>
+                            <div class="form-group mb-3" >
+                                <label for="tanggal_lahir_guru" class="mb-1" style="font-weight: bold">TANGGAL LAHIR</label>
+                                <input type="date" class="form-control" id="tanggal_lahir_guru" name="tanggal_lahir_guru" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="telp_guru" class="mb-1" style="font-weight: bold">TELP GURU</label>
+                                <input type="text" class="form-control" id="telp_guru" name="telp_guru">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="alamat_guru" class="mb-1" style="font-weight: bold">ALAMAT GURU</label>
+                                <textarea name="alamat_guru" id="alamat_guru" class="form-control" cols="30" rows="5"></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="hidden" class="form-control" name="id" id="id2">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                            <button type="button" id="btnclose" class="close btn btn-secondary">close</button>
+                            <input type="submit" id="btnsubmit" class="btn btn-primary" value="update">
                         </div>
                     </form>
                 </div><!-- /.modal-content -->
@@ -187,8 +265,8 @@
                         name: 'tanggal_lahir_guru'
                     },
                     {
-                        data: 'alamat_guru',
-                        name: 'alamat_guru'
+                        data: 'opsi',
+                        name: 'opsi'
                     },
 
                 ]
@@ -196,6 +274,14 @@
 
             
         })
+
+       
+
+        $('.close').on('click',function () {
+            $('#modalhapus').modal('hide');
+            $('#modallihat').modal('hide');
+        });
+
 
         $('#download_sertifikat2').on('click', function() {
                 $.ajax({
@@ -222,5 +308,133 @@
                     }
                 });
             })
+
+            $('#modalhapus').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('id')
+                var nama_guru = button.data('nama')
+                var modal = $(this)
+                $('#nama_guru').html(nama_guru);
+                $('#id').val(id);
+            })
+
+            $('#modallihat').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('id')
+                var nama_guru = button.data('nama')
+                var tanggal_lahir_guru = button.data('tanggal')
+                var tempat_lahir_guru = button.data('tempat')
+                var alamat_guru = button.data('alamat')
+                var telp_guru = button.data('telp')
+                var modal = $(this)
+                $('#nama_guru2').val(nama_guru);
+                $('#tanggal_lahir_guru').val(tanggal_lahir_guru);
+                $('#tempat_lahir_guru').val(tempat_lahir_guru);
+                $('#alamat_guru').val(alamat_guru);
+                $('#telp_guru').val(telp_guru);
+                $('#id2').val(id);
+            })
+
+        $('#formhapus').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "/remove-guru",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#btnhapus').attr('disabled', 'disabled');
+                    $('#btnhapus').val('Process...');
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $("#formhapus")[0].reset();
+                        $('#btnhapus').val('Daftar');
+                        $('#btnhapus').attr('disabled', false);
+                        $('#modalhapus').modal('hide');
+                        var oTable = $('#table_guru').dataTable();
+                        oTable.fnDraw(false);
+                        toastr.success(response.message);
+                        swal({
+                            title: "SUKSES!",
+                            text: response.message,
+                            type: "success"
+                        });
+                    } else {
+                        $('#modalhapus').modal('hide');
+                        $('#btnhapus').val('Daftar');
+                        $('#btnhapus').attr('disabled', false);
+                        toastr.error(response.message);
+                        swal({
+                            title: "OOPS SORRY!",
+                            text: response.message,
+                            type: "error"
+                        });
+                        $('#errList').html("");
+                        $('#errList').addClass('alert alert-danger');
+                        $.each(response.errors, function(key, err_values) {
+                            $('#errList').append('<div>' + err_values + '</div>');
+                        });
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        $('#formsubmit').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "/update-guru",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#btnsubmit').attr('disabled', 'disabled');
+                    $('#btnsubmit').val('Process...');
+                },
+                success: function(response) {
+                    if (response.status == 200) {
+                        $("#formsubmit")[0].reset();
+                        $('#btnsubmit').val('Daftar');
+                        $('#btnsubmit').attr('disabled', false);
+                        $('#modallihat').modal('hide');
+                        var oTable = $('#table_guru').dataTable();
+                        oTable.fnDraw(false);
+                        toastr.success(response.message);
+                        swal({
+                            title: "SUKSES!",
+                            text: response.message,
+                            type: "success"
+                        });
+                    } else {
+                        $('#modallihat').modal('hide');
+                        $('#btnsubmit').val('Daftar');
+                        $('#btnsubmit').attr('disabled', false);
+                        toastr.error(response.message);
+                        swal({
+                            title: "OOPS SORRY!",
+                            text: response.message,
+                            type: "error"
+                        });
+                        $('#errList').html("");
+                        $('#errList').addClass('alert alert-danger');
+                        $.each(response.errors, function(key, err_values) {
+                            $('#errList').append('<div>' + err_values + '</div>');
+                        });
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
     </script>
 @endsection

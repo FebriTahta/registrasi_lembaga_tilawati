@@ -416,6 +416,7 @@
     @endsection
 
     @section('script')
+    <script src=" {{asset('assets/vendor/js/bootstrap.js')}}"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/data.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
