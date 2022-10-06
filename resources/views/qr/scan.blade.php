@@ -144,7 +144,23 @@
             <div class="card-overlay dark-mode-tint"></div>
             <div class="card-bg preload-img" data-src="{{asset('ngaji.jpg')}}" style="max-width: 400px; margin: 0 auto;"></div>
         </div>
-        
+        <div class="card card-style">
+            <div class="content">
+                <div class="d-flex mb-2">
+                    <div>
+                        <i class="far fa-check-circle color-green1-dark fa-3x pt-3 icon-size"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-16 font-600">LEMBAGA AKTIF</h5>
+                        <p style="line-height: 17px; font-size: 11px">
+                            Lembaga anda aktif tergabung dengan lembaga pengguna metode TILAWATI
+                        </p>
+                    </div>
+                </div>            
+            </div>
+            <div class="divider divider-small mb-3 bg-highlight"></div>
+        </div>
+
         <div class="card card-style">
             <div class="content">
                 <h3 class="font-600">{{$lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga}}</h3>
