@@ -180,7 +180,7 @@
                     <p class="font-10 opacity-80 mb-n1"><i class="far fa-calendar"></i> {{\Carbon\Carbon::parse($lembaga->created_at)->format('d F Y')}} <i class="ml-4 far fa-clock"></i> {{\Carbon\Carbon::parse($lembaga->created_at)->format('H:i')}}</p>
                     <p class="font-10 opacity-80"><i class="fa fa-map-marker-alt"></i> {{$lembaga->kabupaten->nama}} {{$lembaga->provinsi->nama}}</p>
                 </div>
-                <a href="/download-sertifikat2/{{$lembaga_id}}" class="float-right btn btn-s bg-highlight rounded-s shadow-xl text-uppercase font-900 font-11 mt-2"><i class="fa fa-download"></i></a>
+                <a href="/download-sertifikat2/{{$lembaga->id}}" class="float-right btn btn-s bg-highlight rounded-s shadow-xl text-uppercase font-900 font-11 mt-2"><i class="fa fa-download"></i></a>
             </div>
         </div>
         
