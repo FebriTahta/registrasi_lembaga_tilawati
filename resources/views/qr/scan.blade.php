@@ -147,6 +147,7 @@
         <div class="card card-style">
             <div class="content">
                 <h3 class="font-600">{{$lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga}}</h3>
+                <input type="hidden" id="lembaga_id" value="{{$lembaga->id}}">
                 <p class="font-11 mt-n2 color-highlight">Penerapan pembelajaran metode TILAWATI</p>
                 <div class="image">
                     <img src="{{asset('serti.jpg')}}" style="max-width: 100%" alt="">
@@ -180,7 +181,7 @@
                     <p class="font-10 opacity-80 mb-n1"><i class="far fa-calendar"></i> {{\Carbon\Carbon::parse($lembaga->created_at)->format('d F Y')}} <i class="ml-4 far fa-clock"></i> {{\Carbon\Carbon::parse($lembaga->created_at)->format('H:i')}}</p>
                     <p class="font-10 opacity-80"><i class="fa fa-map-marker-alt"></i> {{$lembaga->kabupaten->nama}} {{$lembaga->provinsi->nama}}</p>
                 </div>
-                <a href="/download-sertifikat2/{{$lembaga->id}}" class="float-right btn btn-s bg-highlight rounded-s shadow-xl text-uppercase font-900 font-11 mt-2"><i class="fa fa-download"></i></a>
+                <a href="#" id="download_sertifikat" class="float-right btn btn-s bg-highlight rounded-s shadow-xl text-uppercase font-900 font-11 mt-2"><i class="fa fa-download"></i></a>
             </div>
         </div>
         
@@ -233,4 +234,37 @@
 <script type="text/javascript" src="{{asset('mobile_asset/scripts/jquery.js')}}"></script>
 <script type="text/javascript" src="{{asset('mobile_asset/scripts/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('mobile_asset/scripts/custom.js')}}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+<script>
+    $('#download_sertifikat').on('click', function() {
+        var lembaga_id = $('#lembaga_id').val();
+                $.ajax({
+                    type:'GET',
+                    url:'/check-guru-dan-santri',
+                    success:function(response) {
+                        if (response.guru == 0 || response.santri == 0) {
+                            swal({
+                                title: "PERHATIAN",
+                                text: 'sertifikat tersedia setelah lembaga melakukan update data guru & santri',
+                                type: "error"
+                            });
+                        }else{
+                            swal({
+                                title: "OK",
+                                text: 'Tekan OK untuk mengunduh Sertifikat',
+                                type: "success"
+                            }).then(okay => {
+                                if (okay) {
+                                    window.location.href = "/download-sertifikat2/"+lembaga_id;
+                                }
+                            });
+                        }
+                    }
+                });
+            })
+</script>
 </body>
