@@ -118,7 +118,7 @@
 
     <div class="akhiran" style="margin-top: 20px">Telah menerapkan Metode Tilawati, semoga ilmunya barokah.</div>
     <div class="qrcode">
-        <img src="{!! 'data:image/png;base64,'.$data['qrcode'] !!}" alt="" style="max-width: 100px;">
+        <img src="{!! 'data:image/png;base64,'.$data['qrcode'] !!}" alt="" style="max-width: 50px;">
     </div>
     <div class="no_sertifikat" style="font-weight: bold"><u>{{$data['no']}}</u></div>
     <div class="tanggalan" style="margin-left: 10px">Surabaya, {{ucfirst($data['tanggal'])}}</div>
