@@ -517,6 +517,6 @@ class LembagaCont extends Controller
             'qrcode'    => $qrcode,
         ];
 
-        return view('qr.scan',compact('lembaga','data'));
+        return view('qr.scan',compact('lembaga','data','lembaga_id'));
     }
 }
