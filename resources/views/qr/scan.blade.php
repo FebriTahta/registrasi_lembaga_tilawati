@@ -91,7 +91,7 @@
         left: 15%;
         bottom: 22%;
         z-index: 9999;
-        font-size: 7px;
+        font-size: 5px;
         width: 70%;
         margin-bottom:2px;
     }
@@ -99,10 +99,11 @@
     .qrcode {
         position: absolute;
         left: 15%;
-        bottom: 19%;
+        bottom: 26%;
         z-index: 9999;
         font-size: 18px;
         width: 70%;
+        margin-bottom: 1px;
     }
     </style>
 
@@ -171,7 +172,8 @@
 
                     <div class="akhiran" style="margin-top: 20px">Telah menerapkan Metode Tilawati, semoga ilmunya barokah.</div>
                     <div class="qrcode">
-                        <img src="{!! 'data:image/png;base64,'.$data['qrcode'] !!}" alt="" style="max-width: 100px;">
+                        <?php echo \QrCode::size(30)->generate('https://lembaga-tilawati.nurulfalah.org/status-lembaga/'.$lembaga_id) ?>
+                        {{-- <img src="{!! 'data:image/png;base64,'.$data['qrcode'] !!}" alt="" style="max-width: 100px;"> --}}
                     </div>
                     <div class="no_sertifikat" style="font-weight: bold"><u>{{$data['no']}}</u></div>
                     <div class="tanggalan" style="margin-left: 10px">Surabaya, {{ucfirst($data['tanggal'])}}</div>
