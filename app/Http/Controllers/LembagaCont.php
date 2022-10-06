@@ -98,26 +98,33 @@ class LembagaCont extends Controller
 
         $date = \Carbon\Carbon::parse($lembaga->created_at)->locale('id');
         $date->settings(['formatFunction' => 'translatedFormat']);
-        // $id = 0;
-        // if (strlen($lembaga->id) == 1) {
-        //     # code...
-        //     $id = '0000'.$lembaga->id.$lembaga->provinsi_id;
-        // }elseif (strlen($lembaga->id) == 2) {
-        //     # code...
-        //     $id = '000'.$lembaga->id.$lembaga->provinsi_id;
-        // }
-        // elseif (strlen($lembaga->id) == 3) {
-        //     # code...
-        //     $id = '00'.$lembaga->id.$lembaga->provinsi_id;
-        // }elseif (strlen($lembaga->id) == 4) {
-        //     # code...
-        //     $id = '0'.$lembaga->id.$lembaga->provinsi_id;
-        // }elseif (strlen($lembaga->id) == 5) {
-        //     # code...
-        //     $id = $lembaga->id.$lembaga->provinsi_id;
-        // }
+        
         $no_sertifikat = $lembaga->kode.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
         $id = \Crypt::encrypt($lembaga->id);
+        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/status-lembaga/'.$id));
+        $data = [
+            'nama_lembaga' => $lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga,
+            'alamat'    => $lembaga->alamat_lembaga,
+            'kabupaten' => $lembaga->kabupaten->nama_kabupaten,
+            'tanggal'   => $date->format('j F Y'),
+            'no'        => $no_sertifikat,
+            'qrcode'    => $qrcode,
+        ];
+          
+        $customPaper = array(0,0,865,612);
+    	$pdf = PDF::loadView('form.sertifikat', compact('data'))->setPaper($customPaper, 'portrait');
+    	return $pdf->stream('sertifikat.pdf','I');
+    }
+
+    public function download_sertifikat2($lembaga_id)
+    {
+        $lembaga = Lembagasurvey::findOrFail($lembaga_id);
+
+        $date = \Carbon\Carbon::parse($lembaga->created_at)->locale('id');
+        $date->settings(['formatFunction' => 'translatedFormat']);
+        
+        $no_sertifikat = $lembaga->kode.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
+        $id = \Crypt::encrypt($lembaga_id);
         $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/status-lembaga/'.$id));
         $data = [
             'nama_lembaga' => $lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga,
