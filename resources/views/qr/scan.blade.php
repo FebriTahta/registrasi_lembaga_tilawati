@@ -93,7 +93,7 @@
         z-index: 9999;
         font-size: 5px;
         width: 70%;
-        margin-bottom:2px;
+        margin-top:5px;
     }
 
     .qrcode {
