@@ -32,7 +32,7 @@ Route::post('/registrasi-lembaga-baru',[RegisterCont::class, 'registrasi_lembaga
 Route::get('/lupa-password-login',[LembagaCont::class,'lupa_password_login']);
 Route::post('/lupa-username-pass',[LembagaCont::class,'lupa_username_pass']);
 Route::get('/status-lembaga/{lembaga_id}',[LembagaCont::class,'scan']);
-
+Route::get('/download-sertifikat2/{lembaga_id}',[LembagaCont::class,'download_sertifikat2']);
 
 Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
 
     Route::get('/total_santri_guru_tahun_ini',[LembagaCont::class,'total_santri_guru_tahun_ini']);
     Route::get('/download-sertifikat',[LembagaCont::class,'download_sertifikat']);
-    Route::get('/download-sertifikat2/{lembaga_id}',[LembagaCont::class,'download_sertifikat2']);
+    
     Route::get('/profile-lembaga',[LembagaCont::class,'profile_lembaga']);
     Route::post('/update-lembaga',[LembagaCont::class,'update_lembaga']);
     Route::get('/check-lembaga-cabang',[LembagaCont::class,'check_lembaga_cabang']);
