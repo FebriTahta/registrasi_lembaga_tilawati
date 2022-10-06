@@ -156,16 +156,16 @@
                 <div class="isi-sertifikat">
                     <div class="awalan" style="margin-top:25px">Dengan mengucap rasa syukur kehadirat Allah SWT. Dengan ini kami  menerbitkan sertifikat kepada :</div>
 
-                    <table style="margin-left: 11px">
+                    <table style="margin-left: 11px; font-size:7px">
                         <tr>
-                            <td style="width: 30%">Nama Lembaga</td>
+                            <td style="width: 30%">LEMBAGA</td>
                             <td style="width: 2%">:</td>
-                            <td>{{strtoupper($data['nama_lembaga'])}}</td>
+                            <td style="font-weight:bold">{{strtoupper($data['nama_lembaga'])}}</td>
                         </tr>
                         <tr>
-                            <td style="width: 30%">Alamat</td>
+                            <td style="width: 30%">ALAMAT</td>
                             <td style="width: 2%">:</td>
-                            <td style="width: 75%">{{strtoupper($data['alamat'])}}
+                            <td style="width: 75%; font-weight:bold">{{strtoupper($data['alamat'])}}
                             </td>
                         </tr>
                     </table>
