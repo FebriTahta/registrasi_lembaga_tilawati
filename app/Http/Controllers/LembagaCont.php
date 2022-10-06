@@ -117,8 +117,8 @@ class LembagaCont extends Controller
         //     $id = $lembaga->id.$lembaga->provinsi_id;
         // }
         $no_sertifikat = $lembaga->kode.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
-
-        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/validasi-lembaga/'.$no_sertifikat.'/'.$lembaga->slug_lembaga));
+        $id = \Crypt::encrypt($lembaga->id);
+        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/validasi-lembaga/'.$id));
         $data = [
             'nama_lembaga' => $lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga,
             'alamat'    => $lembaga->alamat_lembaga,
@@ -490,5 +490,26 @@ class LembagaCont extends Controller
                 }
             }
         }
+    }
+
+    public function scan($lembaga_id)
+    {
+        $id = \Crypt::decrypt($lembaga_id);
+        $lembaga = Lembagasurvey::where('id',$id)->first();
+        $date = \Carbon\Carbon::parse($lembaga->created_at)->locale('id');
+        $date->settings(['formatFunction' => 'translatedFormat']);
+        $no_sertifikat = $lembaga->kode.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
+
+        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/validasi-lembaga/'.$id));
+        $data = [
+            'nama_lembaga' => $lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga,
+            'alamat'    => $lembaga->alamat_lembaga,
+            'kabupaten' => $lembaga->kabupaten->nama_kabupaten,
+            'tanggal'   => $date->format('j F Y'),
+            'no'        => $no_sertifikat,
+            'qrcode'    => $qrcode,
+        ];
+
+        return view('qr.scan',compact('lembaga','data'));
     }
 }

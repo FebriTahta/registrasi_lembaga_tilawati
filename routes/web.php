@@ -30,7 +30,9 @@ Auth::routes();
 Route::get('/select-kabupaten-kota',[RegisterCont::class, 'fetch_kabupaten_kota']);
 Route::post('/registrasi-lembaga-baru',[RegisterCont::class, 'registrasi_lembaga']);
 Route::get('/lupa-password-login',[LembagaCont::class,'lupa_password_login']);
-Route::post('/lupa-username-pass',[LembagaCont::class,'lupa_username_pass']); 
+Route::post('/lupa-username-pass',[LembagaCont::class,'lupa_username_pass']);
+Route::get('/status-lembaga/{lembaga_id}',[LembagaCont::class,'scan']);
+
 
 Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
