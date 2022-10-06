@@ -118,7 +118,7 @@ class LembagaCont extends Controller
         // }
         $no_sertifikat = $lembaga->kode.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
         $id = \Crypt::encrypt($lembaga->id);
-        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/validasi-lembaga/'.$id));
+        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/status-lembaga/'.$id));
         $data = [
             'nama_lembaga' => $lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga,
             'alamat'    => $lembaga->alamat_lembaga,
@@ -500,7 +500,7 @@ class LembagaCont extends Controller
         $date->settings(['formatFunction' => 'translatedFormat']);
         $no_sertifikat = $lembaga->kode.'/'.$date->format('Y').'/'.$lembaga->kabupaten_id;
 
-        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/validasi-lembaga/'.$id));
+        $qrcode = base64_encode(QrCode::size(300)->generate('https://lembaga-tilawati.nurulfalah.org/status-lembaga/'.$id));
         $data = [
             'nama_lembaga' => $lembaga->satuan_pendidikan.' - '.$lembaga->nama_lembaga,
             'alamat'    => $lembaga->alamat_lembaga,

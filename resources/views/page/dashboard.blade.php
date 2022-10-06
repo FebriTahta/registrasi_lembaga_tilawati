@@ -140,12 +140,12 @@
                                     <a href="javascript:;" id="download_sertifikat"
                                         class="btn btn-sm btn-outline-primary">Unduh Sertifikat</a>
                                     {{-- <a href="/validasi-lembaga/{{auth()->user()->lembagasurvey->id}}/{{date('Y')}}/{{auth()->user()->lembagasurvey->kabupaten_id}}/{{auth()->user()->lembagasurvey->slug_lembaga}}"  --}}
-                                    @php
+                                    {{-- @php
                                         $lembaga = App\Models\Lembagasurvey::findOrFail(auth()->user()->lembagasurvey->id);
                                     @endphp
                                     <a href="/status-lembaga/{{Crypt::encrypt($lembaga->id)}}"
                                         id="lihat_sertifikat" target="_blank"
-                                    class="btn btn-sm btn-outline-primary">Lihat Sertifikat</a>
+                                    class="btn btn-sm btn-outline-primary">Lihat Sertifikat</a> --}}
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
