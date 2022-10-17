@@ -180,7 +180,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span>Murid/Santri</span>
+                                    <span>Santri</span>
                                     <h3 class="card-title text-nowrap mb-4 mt-1" id="jumlah_murid">
                                         {{ auth()->user()->lembagasurvey->santrilembaga->count() }}</h3>
                                 </div>
@@ -204,7 +204,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span>Guru/Pengajar</span>
+                                    <span>Guru</span>
                                     <h3 class="card-title text-nowrap mb-4 mt-1" id="jumlah_guru">
                                         {{ auth()->user()->lembagasurvey->gurulembaga->count() }}</h3>
                                 </div>

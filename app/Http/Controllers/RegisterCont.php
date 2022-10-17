@@ -31,6 +31,7 @@ class RegisterCont extends Controller
         $validator = Validator::make($request->all(), [
             'nama_lembaga'      => 'required|max:50',
             'telp_lembaga'      => 'required',
+            'pass'              => 'required',
             'alamat_lembaga'    => 'required',
             'jenjang_pendidikan'=> 'required',
             'satuan_pendidikan' => 'required',
@@ -81,8 +82,8 @@ class RegisterCont extends Controller
                         [
                             'role'      => 'lembaga',
                             'username'  => $request->nama_lembaga,
-                            'pass'      => 'lmb-'.$acak1.'-'.$acak2,
-                            'password'  => Hash::make('lmb-'.$acak1.'-'.$acak2),
+                            'pass'      => $request->pass,
+                            'password'  => Hash::make($request->pass),
                             
                         ]
                     );
@@ -115,8 +116,8 @@ class RegisterCont extends Controller
                         [
                             'role'      => 'lembaga',
                             'username'  => $request->nama_lembaga,
-                            'pass'      => 'lmb-'.$acak1.'-'.$acak2,
-                            'password'  => Hash::make('lmb-'.$acak1.'-'.$acak2),
+                            'pass'      => $request->pass,
+                            'password'  => Hash::make($request->pass),
                             
                         ]
                     );
@@ -150,12 +151,12 @@ class RegisterCont extends Controller
                         [
                             'phone' => $lembaga->telp_lembaga,
                             'message' => 
-                            '<p>Selamat bergabung di dalam keluarga besar *METODE TILAWATI* </p>'.
-                            '<br><span>Kami harap dengan penerapan Pembelajaran Metode Tilawati di lembaga Ustadz/Ustadzah menjadikan mengaji santri kita lebih mudah dan menyenangkan. </span>'.
-                            '<p>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah</p>'.
-                            '<br><span>*username :* '.$akses->username.'</span>'.
-                            '<br><span>*password :* '.$akses->pass.'</span>'.
-                            '<br><br><span>Login pada dashboard lembaga tilawati : </span><a href="https://lembaga-tilawati.nurulfalah.org">https://lembaga-tilawati.nurulfalah.org</a>',
+                            '<br>Selamat bergabung di dalam keluarga besar *METODE TILAWATI*'.
+                            '<br><br>Kami harap dengan penerapan Pembelajaran Metode Tilawati di lembaga Ustadz/Ustadzah menjadikan mengaji santri kita lebih mudah dan menyenangkan. </p>'.
+                            '<br>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah'.
+                            '<br>*username :* '.$akses->username.''.
+                            '<br>*password :* '.$akses->pass.''.
+                            '<br> <br>Login pada dashboard lembaga tilawati : https://lembaga-tilawati.nurulfalah.org',
 
                             'secret' => false, // or true
                             'retry' => false, // or true
@@ -185,7 +186,7 @@ class RegisterCont extends Controller
                 return response()->json(
                     [
                       'status'  => 200,
-                      'message' => 'Periksa username dan password yang kami kirimkan pada nomor whatsapp anda'
+                      'message' => 'Terimakasih sudah mendaftar dan bergabung bersama Lembaga Tilawati'
                     ]
                 );
             }

@@ -176,7 +176,7 @@
                 {{-- <form method="POST" action="{{ route('register') }}"> @csrf --}}
               <form id="formsubmit"> @csrf
                 <div class="mb-3">
-                  <label for="nama_lembaga" class="form-label">Nama Lembaga</label>
+                  <label for="nama_lembaga" class="form-label">Nama Lembaga (Username)</label>
                   <input
                     type="text"
                     class="form-control"
@@ -187,6 +187,25 @@
                     required
                   />
                 </div>
+                <div class="mb-3 form-password-toggle">
+                    <div class="d-flex justify-content-between">
+                      <label class="form-label" for="pass">Password</label>
+                      {{-- <a href="auth-forgot-password-basic.html">
+                        <small>Forgot Password?</small>
+                      </a> --}}
+                    </div>
+                    <div class="input-group input-group-merge">
+                      <input
+                        type="password"
+                        id="password"
+                        class="form-control"
+                        name="pass"
+                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        aria-describedby="password"
+                      />
+                      <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    </div>
+                  </div>
                 <div class="">
                     <label for="telp_lembaga" class="form-label">No. Telp Lembaga (Whatsapp)</label>
                     <input
