@@ -128,7 +128,7 @@
                                     <h5 class="card-title text-primary">Selamat datang "{{ auth()->user()->username }}" 🎉
                                     </h5>
                                     <p class="mb-4">
-                                        Anda dapat memanajemen struktur data lembaga anda dengan lebih mudah bersama kami
+                                        Anda dapat memanajemenkan struktur data lembaga anda dengan lebih mudah bersama kami
                                     </p>
                                     <span id="lembaga_id"
                                         style="display: none">{{ auth()->user()->lembagasurvey->id }}</span>

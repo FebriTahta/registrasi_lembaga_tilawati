@@ -31,6 +31,8 @@ Route::get('/select-kabupaten-kota',[RegisterCont::class, 'fetch_kabupaten_kota'
 Route::post('/registrasi-lembaga-baru',[RegisterCont::class, 'registrasi_lembaga']);
 Route::get('/lupa-password-login',[LembagaCont::class,'lupa_password_login']);
 Route::post('/lupa-username-pass',[LembagaCont::class,'lupa_username_pass']);
+Route::get('/pemulihan-akun',[LembagaCont::class,'pemulihan_akun']);
+Route::post('/pemulihan-akun-post',[LembagaCont::class,'pemulihan_akun_post']);
 Route::get('/status-lembaga/{lembaga_id}',[LembagaCont::class,'scan']);
 Route::get('/download-sertifikat2/{lembaga_id}',[LembagaCont::class,'download_sertifikat2']);
 
@@ -50,6 +52,8 @@ Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::get('/daftar-santri',[SantriCont::class,'daftar_santri']);
     Route::post('/remove-santri',[SantriCont::class,'remove_santri']);
     Route::post('/update-santri',[SantriCont::class,'update_santri']);
+    Route::post('/lulus-santri',[SantriCont::class,'lulus_santri']);
+    Route::get('/daftar-santri-lulus',[SantriCont::class,'daftar_santri_lulus']);
 
     //export
     Route::get('/export-template-guru',[ExportCont::class,'export_template_guru']);
@@ -68,5 +72,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:lembaga']], function () {
     Route::get('/check-guru-dan-santri',[LembagaCont::class,'check_guru_dan_santri']);
 
     Route::post('/minta-username-password',[LembagaCont::class,'minta_username_password']);
+    Route::post('/username-baru',[LembagaCont::class,'username_baru']);
+    Route::post('/password-baru',[LembagaCont::class,'password_baru']);
     
 });

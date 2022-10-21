@@ -19,13 +19,12 @@
                     <div class="d-flex align-items-end row">
                         <div class="col-sm-7">
                             <div class="card-body">
-                                <h5 class="card-title text-primary">Daftar Santri Lembaga {{auth()->user()->username}}</h5>
+                                <h5 class="card-title text-primary">Daftar Santri Lulus Lembaga {{auth()->user()->username}}</h5>
                                 <p class="mb-4">
-                                    Berikut adalah daftar data santri yang telah terdaftar
+                                    Berikut adalah daftar data santri yang sudah lulus
                                 </p>
                                 <ul>
-                                    <li>Anda dapat menambahkan santri baru dengan menekan tombol Tambah Santri.</li>
-                                    <li>Atau anda dapat menambahkan beberapa santri sekaligus dengan mengunduh template Santri, Kemudian mengimportkannya kembali dengan mengisi data yang sesuai dengan template.</li>
+                                    <li>Anda dapat memanajemen data santri, apabila terjadi kesalahan dalam memindahkan santri yang sudah lulus, anda dapat memindahkan santri tersebut kembali ke daftar santri aktif pada tombol aktif.</li>
                                 </ul>
                             </div>
                         </div>
@@ -56,23 +55,6 @@
                     @endif
                     {{-- </div>
                 </div> --}}
-            </div>
-            <div class="col-lg-12 mb-4 order-0">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a href="/create-new-santri" class="btn btn-success mb-2" style="margin-bottom: 20px; width: 100%"> Tambah Santri</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="/export-template-santri" class="btn btn-info mb-2" style="margin-bottom: 20px; width: 100%"> Unduh Template Santri</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="#" class="btn btn-primary mb-2" style="margin-bottom: 20px;width: 100%" data-toggle="modal" data-target="#modalimport"> Import Data Santri</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-lg-12 mb-4 order-0">
                 <div class="card">
@@ -344,7 +326,7 @@
                         processing: true,
                         serverSide: true,
                         ajax: {
-                            url:'/daftar-santri',
+                            url:'/daftar-santri-lulus',
                         },
                         columns: [
                             {

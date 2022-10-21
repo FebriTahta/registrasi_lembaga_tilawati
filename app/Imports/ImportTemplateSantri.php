@@ -70,7 +70,8 @@ class ImportTemplateSantri implements ToCollection,SkipsOnError, SkipsOnFailure
                         'jenis_wali_santri'=> $row[3],
                         'nama_wali_santri'=> $row[4],
                         'telp_wali_santri'=> $row[5],
-                        'alamat_santri' => $row[6]
+                        'alamat_santri' => $row[6],
+                        'status' => 'aktif',
                     ]
                 );
             }

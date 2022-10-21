@@ -7,6 +7,7 @@ use App\Models\Akseslembaga;
 use App\Models\Lembagasurvey;
 use App\Models\Cabang;
 use App\Models\Kabupaten;
+use Illuminate\Support\Facades\Hash;
 use QrCode;
 use PDF;
 use Illuminate\Support\Str;
@@ -152,6 +153,15 @@ class LembagaCont extends Controller
         if ($request->ajax()) {
             # code...
             $kabupaten = Kabupaten::where('id',$request->kabupaten_id)->first();
+            //jenjang & satuan pendidikan
+            $satuan_pendidikan;
+            if ($request->jenjang_pendidikan == 'formal') {
+                # code...
+                $satuan_pendidikan = $request->satuan_pendidikan_formal;
+            }else {
+                # code...
+                $satuan_pendidikan = $request->satuan_pendidikan_non_formal;
+            }
 
             $lembaga = Lembagasurvey::updateOrCreate(
                 [
@@ -162,18 +172,19 @@ class LembagaCont extends Controller
                     'alamat_lembaga'    => $request->alamat_lembaga,
                     'telp_lembaga'      => $request->telp_lembaga,
                     'jenjang_pendidikan'=> $request->jenjang_pendidikan,
-                    'satuan_pendidikan' => $request->satuan_pendidikan,
+                    'satuan_pendidikan' => $satuan_pendidikan,
                     'kabupaten_id'      => $request->kabupaten_id,
                     'provinsi_id'       => $kabupaten->provinsi_id,
                     'slug_lembaga'      => Str::slug($request->nama_lembaga),
                 ]
             );
 
-            $akses   = Akseslembaga::where('id', $lembaga->akseslembaga_id)->update(
-                [
-                    'username'=>$lembaga->nama_lembaga
-                ]
-            );
+            // tidak jadi merubah akses lembaga (username) ketika merubah data lembaga karena diganti dengan merubah username
+            // $akses   = Akseslembaga::where('id', $lembaga->akseslembaga_id)->update(
+            //     [
+            //         'username'=>$lembaga->nama_lembaga
+            //     ]
+            // );
 
             return response()->json(
                 [
@@ -365,10 +376,10 @@ class LembagaCont extends Controller
                             'phone' => $lembaga->telp_lembaga,
                             'message' => 
                             // '<p>*LUPA USERNAME & PASSWORD*</p>'.
-                            '<p>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah</p>'.
-                            '<br><span>*username :* '.$akses->username.'</span>'.
-                            '<br><span>*password :* '.$akses->pass.'</span>'.
-                            '<br><br><span>Login pada dashboard lembaga tilawati : </span><a href="https://lembaga-tilawati.nurulfalah.org">https://lembaga-tilawati.nurulfalah.org</a>',
+                            'Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah'.
+                            '<br>*username :* '.$akses->username.''.
+                            '<br>*password :* '.$akses->pass.''.
+                            '<br><br>Login pada dashboard lembaga tilawati : https://lembaga-tilawati.nurulfalah.org',
 
                             'secret' => false, // or true
                             'retry' => false, // or true
@@ -450,11 +461,11 @@ class LembagaCont extends Controller
                                 [
                                     'phone' => $lembaga->telp_lembaga,
                                     'message' => 
-                                    '<p>*LUPA USERNAME & PASSWORD*</p>'.
-                                    '<p>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah</p>'.
-                                    '<br><span>*username :* '.$akses->username.'</span>'.
-                                    '<br><span>*password :* '.$akses->pass.'</span>'.
-                                    '<br><br><span>Login pada dashboard lembaga tilawati : </span><a href="https://lembaga-tilawati.nurulfalah.org">https://lembaga-tilawati.nurulfalah.org</a>',
+                                    '*LUPA USERNAME & PASSWORD*'.
+                                    '<br><br>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah'.
+                                    '<br><br>*username :* '.$akses->username.''.
+                                    '<br>*password :* '.$akses->pass.''.
+                                    '<br><br>Login pada dashboard lembaga tilawati : https://lembaga-tilawati.nurulfalah.org',
 
                                     'secret' => false, // or true
                                     'retry' => false, // or true
@@ -518,5 +529,300 @@ class LembagaCont extends Controller
         ];
 
         return view('qr.scan',compact('lembaga','data','lembaga_id'));
+    }
+
+    public function pemulihan_akun(Request $request)
+    {
+        
+        return view('page.pemulihan_akun');
+    }
+
+    public function pemulihan_akun_post(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+            $validator = Validator::make($request->all(), [
+                'nama_lembaga'      => 'required|max:50',
+                'telp_lembaga'      => 'required',
+                'jenjang_pendidikan'=> 'required',
+                // 'satuan_pendidikan' => 'required',
+                'g-recaptcha-response'    => 'required',
+            ]);
+
+            if ($validator->fails()) {
+
+                return response()->json([
+                    'status' => 400,
+                    'message'  => 'Pastikan semua data sudah terisi dengan benar & centang reCAPTCHA',
+                    'errors' => $validator->messages(),
+                ]);
+    
+            }else {
+                $lembaga_exist = Lembagasurvey::where('telp_lembaga', $request->telp_lembaga_baru)->first();
+
+                //jenjang & satuan pendidikan
+                $satuan_pendidikan;
+                if ($request->jenjang_pendidikan == 'formal') {
+                    # code...
+                    $satuan_pendidikan = $request->satuan_pendidikan_formal;
+                }else {
+                    # code...
+                    $satuan_pendidikan = $request->satuan_pendidikan_non_formal;
+                }
+
+                if ($request->telp_lembaga == $request->telp_lembaga_baru) {
+                    # code...
+                    return response()->json([
+                        'status'    => 400,
+                        'message'   => 'Nomor telp lama tidak boleh sama dengan nomor telp baru. Pesan akan dikirim ke whatsapp nomor telp baru',
+                        'errors'    => 405,
+                    ]);
+
+                }elseif(substr($request->telp_lembaga_baru,0,2) !== '08' || strlen($request->telp_lembaga_baru) < 10 || strlen($request->telp_lembaga_baru) > 13) {
+                    # code telp tidak sesuai format...
+                    return response()->json([
+                        'status'    => 400,
+                        'message'   => 'Pastikan nomor baru anda benar & terhubung dengan whatsapp',
+                        'errors'    => 405,
+                    ]);
+                }
+                elseif($lembaga_exist !== null) {
+                    # code telp baru terpakai...
+                    return response()->json([
+                        'status'    => 400,
+                        'message'   => 'Nomor baru anda sudah terdaftar pada lembaga lain. Silahkan gunakan nomor telpon yang lain',
+                        'errors'    => 404,
+                    ]);
+                }else {
+                    # code...
+                    $lembaga = Lembagasurvey::where('nama_lembaga', $request->nama_lembaga)
+                                        ->where('telp_lembaga', $request->telp_lembaga)
+                                        ->where('jenjang_pendidikan', $request->jenjang_pendidikan)
+                                        ->where('satuan_pendidikan', $satuan_pendidikan)
+                                        ->first();
+                
+                    if ($lembaga !== null) {
+                        # code... ada
+                        $akses   = Akseslembaga::where('id', $lembaga->akseslembaga_id)->first();
+                        set_time_limit(0);
+                            $curl = curl_init();
+                            $token = "ErPMCdWGNfhhYPrrGsTdTb1vLwUbIt35CQ2KlhffDobwUw8pgYX4TN5rDT4smiIc";
+                            $payload = [
+                                "data" => [
+                                    [
+                                        'phone' => $request->telp_lembaga_baru,
+                                        'message' => 
+                                        '*PEMULIHAN AKUN*'.
+                                        '<br><br>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah. Jangan lupa untuk mengganti nomor baru anda pada profile lembaga'.
+                                        '<br><br>*username :* '.$akses->username.''.
+                                        '<br>*password :* '.$akses->pass.''.
+                                        '<br><br>Login pada dashboard lembaga tilawati : https://lembaga-tilawati.nurulfalah.org',
+
+                                        'secret' => false, // or true
+                                        'retry' => false, // or true
+                                        'isGroup' => false, // or true
+                                    ]
+                                ]
+                            
+                            ];
+                            
+                            
+                        curl_setopt($curl, CURLOPT_HTTPHEADER,
+                            array(
+                                "Authorization: $token",
+                                "Content-Type: application/json"
+                            )
+                        );
+                            
+                            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+                            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($payload) );
+                            curl_setopt($curl, CURLOPT_URL, "https://solo.wablas.com/api/v2/send-message");
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+                            $result = curl_exec($curl);
+                            curl_close($curl);
+                
+                        return response()->json(
+                            [
+                                'status'  => 200,
+                                'message' => 'Periksa username dan password yang kami kirimkan pada nomor whatsapp anda'
+                            ]
+                        );
+                    }else{
+                        return response()->json(
+                            [
+                                'status'  => 400,
+                                'message' => 'KESALAHAN. Tidak ditemukan lembaga dengan data tersebut'
+                            ]
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    public function username_baru(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+            $user               = Akseslembaga::where('id', auth()->user()->id)->where('username', $request->username_lama)->first();
+            $user_baru_exist    = Akseslembaga::where('username', $request->username_baru)->where('pass', auth()->user()->pass)->first();
+            $lembaga            = Lembagasurvey::where('akseslembaga_id', auth()->user()->id)->first();
+            if ($user !== null) {
+                # code...
+                if ($user_baru_exist == null) {
+                    # code...
+                    // send message
+                    set_time_limit(0);
+                            $curl = curl_init();
+                            $token = "ErPMCdWGNfhhYPrrGsTdTb1vLwUbIt35CQ2KlhffDobwUw8pgYX4TN5rDT4smiIc";
+                            $payload = [
+                                "data" => [
+                                    [
+                                        'phone' => $lembaga->telp_lembaga,
+                                        'message' => 
+                                        '*PERUBAHAN USERNAME*'.
+                                        '<br><br>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah.'.
+                                        '<br><br>*username :* '.$request->username_baru.''.
+                                        '<br>*password :* '.$user->pass.''.
+                                        '<br><br>Login pada dashboard lembaga tilawati : https://lembaga-tilawati.nurulfalah.org',
+
+                                        'secret' => false, // or true
+                                        'retry' => false, // or true
+                                        'isGroup' => false, // or true
+                                    ]
+                                ]
+                            
+                            ];
+                            
+                            
+                        curl_setopt($curl, CURLOPT_HTTPHEADER,
+                            array(
+                                "Authorization: $token",
+                                "Content-Type: application/json"
+                            )
+                        );
+                            
+                            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+                            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($payload) );
+                            curl_setopt($curl, CURLOPT_URL, "https://solo.wablas.com/api/v2/send-message");
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+                            $result = curl_exec($curl);
+                            curl_close($curl);
+                    // change username
+                    $user->update(['username'=>$request->username_baru]);
+                    return response()->json(
+                        [
+                            'status'  => 200,
+                            'message' => 'username lembaga anda berhasil diperbarui.',  
+                        ]
+                    );
+                }else {
+                    # code...
+                    return response()->json(
+                        [
+                            'status'  => 400,
+                            'message' => 'gunakan username lain',
+                        ]
+                    );
+                }
+            }else {
+                # code...
+                return response()->json(
+                    [
+                        'status'  => 400,
+                        'message' => 'username lama anda salah',
+                    ]
+                );
+            }
+        }
+        
+    }
+
+    public function password_baru(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+            $user               = Akseslembaga::where('id', auth()->user()->id)->where('pass', $request->pass_lama)->first();
+            $user_baru_exist    = Akseslembaga::where('pass', $request->pass_baru)->where('username', auth()->user()->username)->first();
+            $lembaga            = Lembagasurvey::where('akseslembaga_id', auth()->user()->id)->first();
+
+            if ($user !== null) {
+                # ada code...
+                if ($user_baru_exist == null) {
+                    # user & pass yang baru dibuat aman code...
+                    // send message
+                    set_time_limit(0);
+                            $curl = curl_init();
+                            $token = "ErPMCdWGNfhhYPrrGsTdTb1vLwUbIt35CQ2KlhffDobwUw8pgYX4TN5rDT4smiIc";
+                            $payload = [
+                                "data" => [
+                                    [
+                                        'phone' => $lembaga->telp_lembaga,
+                                        'message' => 
+                                        '*PERUBAHAN PASSWORD*'.
+                                        '<br><br>Berikut kami infokan username dan  password lembaga Ustadz/Ustadzah.'.
+                                        '<br><br>*username :* '.$user->username.''.
+                                        '<br>*password :* '.$request->pass_baru.''.
+                                        '<br><br>Login pada dashboard lembaga tilawati : https://lembaga-tilawati.nurulfalah.org',
+
+                                        'secret' => false, // or true
+                                        'retry' => false, // or true
+                                        'isGroup' => false, // or true
+                                    ]
+                                ]
+                            ];
+                            
+                        curl_setopt($curl, CURLOPT_HTTPHEADER,
+                            array(
+                                "Authorization: $token",
+                                "Content-Type: application/json"
+                            )
+                        );
+                            
+                            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+                            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($payload) );
+                            curl_setopt($curl, CURLOPT_URL, "https://solo.wablas.com/api/v2/send-message");
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+                            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+                            $result = curl_exec($curl);
+                            curl_close($curl);
+
+                    // change username
+                    $user->update(
+                        [
+                            'pass' => $request->pass_baru,
+                            'password' => Hash::make($request->pass_baru),
+                        ]
+                    );
+                    return response()->json(
+                        [
+                            'status'  => 200,
+                            'message' => 'password lembaga anda berhasil diperbarui.',  
+                        ]
+                    );
+                }else {
+                    # code...
+                    return response()->json(
+                        [
+                            'status'  => 400,
+                            'message' => 'gunakan password lain',
+                        ]
+                    );
+                }
+            }else {
+                # code...
+                return response()->json(
+                    [
+                        'status'  => 400,
+                        'message' => 'password lama anda salah',
+                    ]
+                );
+            }
+        }
     }
 }

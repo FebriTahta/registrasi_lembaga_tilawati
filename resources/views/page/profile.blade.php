@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 mb-4 order-0">
+            {{-- <div class="col-lg-6 mb-4 order-0">
                 <div class="card">
                     <div class="card-body">
                         <form id="formuserpass">@csrf
@@ -52,7 +52,6 @@
                                 <span>Username yang diperlukan untuk login akan berubah sesuai dengan nama lembaga yang anda update.</span>
                                 <p>Ingin mengirimkan username & password ke nomor whatsapp lembaga yang telah dicantumkan ?</p>
                             </div>
-                            {{-- <div class="g-recaptcha" data-sitekey="ISI DENGAN DATA SITE KEY KALIAN"></div> --}}
                             <div class="form-group" style="max-width: 100%">
                                 <p style="width:50%">{!! NoCaptcha::display() !!}</p>
                                 {!! NoCaptcha::renderJs() !!}
@@ -67,6 +66,130 @@
                         </form>
                     </div>
                 </div>
+            </div> --}}
+            <div class="col-lg-6 mb-4 order-0">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="formubahuser">@csrf
+                            <div class="form-group">
+                                <span>Merubah username lembaga anda ?</span>
+                                <p>Silahkan lengkapi form berikut untuk merubah username</p>
+                            </div>
+                            <div class="form-group" style="max-width: 100%">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3 form-password-toggle">
+                                            <div class="d-flex justify-content-between">
+                                              <label class="form-label" for="pass">Username lama</label>
+                                            </div>
+                                            <div class="input-group input-group-merge">
+                                              <input
+                                                type="text"
+                                                id="username_lama"
+                                                class="form-control"
+                                                name="username_lama"
+                                                aria-describedby="username_lama"
+                                                required
+                                              />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 form-password-toggle">
+                                            <div class="d-flex justify-content-between">
+                                              <label class="form-label" for="pass">Username Baru</label>
+                                            </div>
+                                            <div class="input-group input-group-merge">
+                                              <input
+                                                type="text"
+                                                id="username_baru"
+                                                class="form-control"
+                                                name="username_baru"
+                                                aria-describedby="username_baru"
+                                                required
+                                              />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p style="width:50%">{!! NoCaptcha::display() !!}</p>
+                                        {!! NoCaptcha::renderJs() !!}
+                                        @error('g-recaptcha-response')
+                                        <span class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-info" id="btnubahuser" value="Ubah Username">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4 order-0">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="formubahpass">@csrf
+                            <div class="form-group">
+                                <span>Ingin merubah password yang sudah dibuat sebelumnya.</span>
+                                <p>Silahkan lengkapi form berikut untuk merubah password</p>
+                            </div>
+                            <div class="form-group" style="max-width: 100%">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3 form-password-toggle">
+                                            <div class="d-flex justify-content-between">
+                                              <label class="form-label" for="pass">Password Lama</label>
+                                            </div>
+                                            <div class="input-group input-group-merge">
+                                              <input
+                                                type="password"
+                                                id="password"
+                                                class="form-control"
+                                                name="pass_lama"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="password"
+                                                required
+                                              />
+                                              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 form-password-toggle">
+                                            <div class="d-flex justify-content-between">
+                                              <label class="form-label" for="pass">Password Baru</label>
+                                            </div>
+                                            <div class="input-group input-group-merge">
+                                              <input
+                                                type="password"
+                                                id="password"
+                                                class="form-control"
+                                                name="pass_baru"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="password"
+                                                required
+                                              />
+                                              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p style="width:50%">{!! NoCaptcha::display() !!}</p>
+                                        {!! NoCaptcha::renderJs() !!}
+                                        @error('g-recaptcha-response')
+                                        <span class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-info" id="btnubahpass" value="Ubah Password">
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-12 mb-4 order-0">
                 <div class="card">
@@ -76,7 +199,7 @@
                                 <div class="col-md-4 mb-3">
                                     <div class="form-group">
                                         <label for="nama_lembaga" class="form-label">Nama Lembaga</label>
-                                        <input type="text" value="{{auth()->user()->lembagasurvey->nama_lembaga}}" name="nama_lembaga" class="form-control text-capitalize">
+                                        <input type="text" value="{{auth()->user()->lembagasurvey->nama_lembaga}}" name="nama_lembaga" class="form-control text-capitalize" >
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-3 ">
@@ -124,7 +247,7 @@
                                     @endif
                                     >
                                         <label for="formal" class="form-label">Satuan Pendidikan Formal</label>
-                                        <select name="satuan_pendidikan" class="form-control" >
+                                        <select name="satuan_pendidikan_formal" class="form-control" >
                                             <option value="TK"
                                             @if(auth()->user()->lembagasurvey->satuan_pendidikan == 'TK')
                                             selected
@@ -193,7 +316,7 @@
                                         @endif
                                         >
                                         <label for="non_formal" class="form-label">Satuan Pendidikan Non Formal</label>
-                                        <select name="satuan_pendidikan" class="form-control" >
+                                        <select name="satuan_pendidikan_non_formal" class="form-control" >
                                             <option value="KB"
                                             @if(auth()->user()->lembagasurvey->satuan_pendidikan == 'KB')
                                             selected
@@ -240,7 +363,6 @@
             </div>
         </div>
     </div>
-
     
 
 </div>
@@ -345,11 +467,119 @@
                                 title: "SUKSES!",
                                 text: response.message,
                                 type: "success"
+                            }).then(okay => {
+                                if (okay) {
+                                    window.location.href = "/profile-lembaga";
+                                }
                             });
                         } else {
                             
                             $('#btnsubmit').val('Daftar');
                             $('#btnsubmit').attr('disabled', false);
+                            toastr.error(response.message);
+                            swal({
+                                title: "OOPS SORRY!",
+                                text: response.message,
+                                type: "error"
+                            });
+                            $('#errList').html("");
+                            $('#errList').addClass('alert alert-danger');
+                            $.each(response.errors, function(key, err_values) {
+                                $('#errList').append('<div>' + err_values + '</div>');
+                            });
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('#formubahuser').submit(function(e) {
+            e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: "/username-baru",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $('#btnubahuser').attr('disabled', 'disabled');
+                        $('#btnubahuser').val('Process...');
+                    },
+                    success: function(response) {
+                        if (response.status == 200) {
+                            $("#formsubmit")[0].reset();
+                            $('#btnubahuser').val('Ubah Username');
+                            $('#btnubahuser').attr('disabled', false);
+                            toastr.success(response.message);
+                            swal({
+                                title: "SUKSES!",
+                                text: response.message,
+                                type: "success"
+                            }).then(okay => {
+                                if (okay) {
+                                    window.location.href = "/profile-lembaga";
+                                }
+                            });
+                        } else {
+                            
+                            $('#btnubahuser').val('Ubah Username');
+                            $('#btnubahuser').attr('disabled', false);
+                            toastr.error(response.message);
+                            swal({
+                                title: "OOPS SORRY!",
+                                text: response.message,
+                                type: "error"
+                            });
+                            $('#errList').html("");
+                            $('#errList').addClass('alert alert-danger');
+                            $.each(response.errors, function(key, err_values) {
+                                $('#errList').append('<div>' + err_values + '</div>');
+                            });
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('#formubahpass').submit(function(e) {
+            e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: "/password-baru",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        $('#btnubahpass').attr('disabled', 'disabled');
+                        $('#btnubahpass').val('Process...');
+                    },
+                    success: function(response) {
+                        if (response.status == 200) {
+                            $("#formubahpass")[0].reset();
+                            $('#btnubahpass').val('Ubah Username');
+                            $('#btnubahpass').attr('disabled', false);
+                            toastr.success(response.message);
+                            swal({
+                                title: "SUKSES!",
+                                text: response.message,
+                                type: "success"
+                            }).then(okay => {
+                                if (okay) {
+                                    window.location.href = "/profile-lembaga";
+                                }
+                            });
+                        } else {
+                            
+                            $('#btnubahpass').val('Ubah Username');
+                            $('#btnubahpass').attr('disabled', false);
                             toastr.error(response.message);
                             swal({
                                 title: "OOPS SORRY!",

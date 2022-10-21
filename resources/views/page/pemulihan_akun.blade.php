@@ -5,31 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -43,7 +29,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -54,18 +40,28 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('Login') }}
                                 </button>
+
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </form>
@@ -76,6 +72,20 @@
 </div>
 @endsection --}}
 
+<!DOCTYPE html>
+
+<!-- =========================================================
+* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
+==============================================================
+
+* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
+* Created by: ThemeSelection
+* License: You must have a valid license purchased in order to legally use the theme for your project.
+* Copyright ThemeSelection (https://themeselection.com)
+
+=========================================================
+ -->
+<!-- beautify ignore:start -->
 <html
   lang="en"
   class="light-style customizer-hide"
@@ -91,7 +101,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Registrasi Kelembagaan</title>
+    <title>Pemulihan Akun</title>
 
     <link rel="icon" type="image/x-icon" href="{{asset('tumbreg.jpeg')}}" />
 
@@ -110,47 +120,33 @@
     <link rel="icon" type="image/x-icon" href="{{asset('logo-nf.png')}}" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="{{ asset('https://fonts.googleapis.com') }}" />
+    <link rel="preconnect" href="{{ asset('https://fonts.gstatic.com') }}" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}" />
     <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+    <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
-    <style>
-        .select2-container--default .select2-selection--single{
-            padding:6px;
-            height: 40px;
-            width: 100%; 
-            font-size: 15px;  
-            position: relative;
-            border: 0.1;
-        }
-        span.select2-selection--single[aria-expanded=true] {
-            border-color: blue !important;   
-        }
-    </style>
+    <script src="{{ asset('assets/js/config.js') }}"></script>
   </head>
 
   <body>
@@ -159,74 +155,61 @@
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
-          <!-- Register Card -->
+          <!-- Register -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="#" class="app-brand-link gap-2">
-                    <img src="{{asset('Untitled-s.png')}}" style="max-width: 200px" alt="">
+                  
+                  <img src="{{asset('Untitled-s.png')}}" style="max-width: 200px" alt="">
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Registrasi Lembaga</h4>
-              <p class="mb-4" style="margin-bottom: 0">🚀 buat manajemen lembaga anda mudah dan menyenangkan!</p>
+              <h4 class="mb-2">Pemulihan Akun</h4>
+              <p>Nomor Telepon / Whatsapp sudah tidak aktif atau hilang ? <br> Gantikan dengan nomor yang baru</p>
+              <code>Username & Password akan dikirim ulang melalui whatsapp ke nomor baru anda</code>
+              @if ($message = Session::get('error'))
+              <div class="alert alert-danger alert-block" id="alert" style="display: block">
+                  <button type="button" class="close btn btn-sm btn-danger" data-dismiss="alert" style="text-align: right">×</button>
+                  <strong style="text-align: left">{{ $message }}</strong>
+              </div>
+              @endif
+            <hr>
 
-              {{-- <form id="formAuthentication" class="mb-3" action="index.html" method="POST"> --}}
-                {{-- <form method="POST" action="{{ route('register') }}"> @csrf --}}
-              <form id="formsubmit"> @csrf
-                <div class="mb-3">
-                  <label for="nama_lembaga" class="form-label">Nama Lembaga (Username)</label>
+             <form id="formlupapass">@csrf
+                <div class="mb-3 mt-3">
+                  <label for="email" class="form-label">Nama Lembaga</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="nama_lembaga"
+                    id="email"
                     name="nama_lembaga"
                     placeholder="Nama Lembaga"
                     autofocus
-                    required
                   />
                 </div>
-                <div class="mb-3 form-password-toggle">
-                    <div class="d-flex justify-content-between">
-                      <label class="form-label" for="pass">Password</label>
-                      {{-- <a href="auth-forgot-password-basic.html">
-                        <small>Forgot Password?</small>
-                      </a> --}}
-                    </div>
-                    <div class="input-group input-group-merge">
-                      <input
-                        type="password"
-                        id="password"
-                        class="form-control"
-                        name="pass"
-                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                        aria-describedby="password"
-                      />
-                      <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                    </div>
-                  </div>
-                <div class="">
-                    <label for="telp_lembaga" class="form-label">No. Telp Lembaga (Whatsapp)</label>
+                <div class="mb-3">
+                    <label for="telp_lembaga" class="form-label">No. Telp Lembaga<span style="color: red"> ( Lama )</span> </label>
                     <input
                       type="number"
                       class="form-control"
                       id="telp_lembaga"
                       name="telp_lembaga"
-                      placeholder="Telp (Whatsapp) Lembaga"
+                      placeholder="Telp (Whatsapp) Lembaga Lama"
                       autofocus
                     />
                 </div>
-                <small style="color: red; margin-bottom: 50px">username dan password akan dikirimkan melalui Whatsapp dari nomor yang didaftarkan</small>
-                <div class="mb-3 mt-3">
-                    <label for="kabupaten" class="form-label">ASAL LEMBAGA</label>
-                    <select name="kabupaten_id" class="form-control select2" id="kota">
-                        <option value=""></option>
-                    </select>
-                </div>
-                <div class="mb-3 mt-3">
-                  <label for="alamat_lembaga" class="form-label">ALAMAT LEMBAGA</label>
-                  <textarea name="alamat_lembaga" id="alamat_lembaga" class="form-control" cols="30" rows="3" required></textarea>  
+                <div class="mb-3">
+                    <label for="telp_lembaga" class="form-label">No. Telp Penerima Pesan<span style="color: red"> ( Baru )</span> </label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="telp_lembaga_baru"
+                      name="telp_lembaga_baru"
+                      placeholder="Telp (Whatsapp) Lembaga Baru"
+                      autofocus
+                    />
                 </div>
                 <div class="mb-3">
                     <label for="jenjang" class="form-label">Jenjang Pendidikan</label>
@@ -264,19 +247,40 @@
                         <option value="NON-FORMAL-ETC">Lembaga Non Formal Lainnya</option>
                     </select>
                 </div>
-                <input type="submit" class="btn btn-primary d-grid w-100" value="Daftar" id="btnsubmit">
-              </form>
 
-              <p class="text-center">
-                <span>Sudah mendaftar / Sudah memiliki akun ?</span>
-                <a href="/login">
-                  <span>Login ke Lembaga</span>
+                <div class="mb-3" style="max-width: 100%">
+                    <p style="width:50%">{!! NoCaptcha::display() !!}</p>
+                    {!! NoCaptcha::renderJs() !!}
+                    @error('g-recaptcha-response')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                
+                <div class="mb-3">
+                  {{-- <button class="btn btn-primary d-grid w-100" type="submit">Kirim Lupa Password</button> --}}
+                  <input type="submit" class="btn btn-primary d-grid w-100" id="btnlupapass" value="Kirim Lupa Password">
+                </div>
+              </form>
+              <hr>
+              <p class="text-left">
+                <span>Lembaga Pengguna Metode Tilawati Baru ?</span>
+                <a href="/register">
+                  <span> Buat Akun Baru</span>
                 </a>
+                
               </p>
-              
+              <span>atau</span>
+                <p class="text-left">
+                    <a href="/login">
+                        <span> Login ke Lembaga</span>
+                    </a>
+                </p>
+              <hr>
             </div>
           </div>
-          <!-- Register Card -->
+          <!-- /Register -->
         </div>
       </div>
     </div>
@@ -294,9 +298,7 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    {{-- <script src="../assets/vendor/libs/jquery/jquery.js"></script> --}}
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
@@ -314,34 +316,20 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
+    <script>
+      
+      $('.close').click(function () {
+        document.getElementById("alert").style.display = "none"
+      })
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    
-    <script type="text/javascript">
-        var url = "/select-kabupaten-kota";
-      
-            $('#kota').select2({
-                placeholder: 'Kota / Kabupaten',
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        return {
-                            results:  $.map(data, function (item) {
-                                return {
-                                    text: item.nama,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
         $('#jenjang').on('change',function () {
             if (this.value == 'formal') {
                 document.getElementById("satuan_pendidikan_formal").style.display = "block";
@@ -358,25 +346,25 @@
             }
         })
 
-        $('#formsubmit').submit(function(e) {
+        $('#formlupapass').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             $.ajax({
                 type: 'POST',
-                url: "/registrasi-lembaga-baru",
+                url: "/pemulihan-akun-post",
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#btnsubmit').attr('disabled', 'disabled');
-                    $('#btnsubmit').val('Process...');
+                    $('#btnlupapass').attr('disabled', 'disabled');
+                    $('#btnlupapass').val('Process...');
                 },
                 success: function(response) {
                     if (response.status == 200) {
-                        $("#formsubmit")[0].reset();
-                        $('#btnsubmit').val('Daftar');
-                        $('#btnsubmit').attr('disabled', false);
+                        $("#formlupapass")[0].reset();
+                        $('#btnlupapass').val('Konfirmasi Lupa Password');
+                        $('#btnlupapass').attr('disabled', false);
                         toastr.success(response.message);
                         swal({
                             title: "SUKSES!",
@@ -389,11 +377,11 @@
                         });
                     } else {
                         
-                        $('#btnsubmit').val('Daftar');
-                        $('#btnsubmit').attr('disabled', false);
+                        $('#btnlupapass').val('Konfirmasi Lupa Password');
+                        $('#btnlupapass').attr('disabled', false);
                         toastr.error(response.message);
                         swal({
-                            title: "OOPS SORRY!",
+                            title: "MAAF!",
                             text: response.message,
                             type: "error"
                         });

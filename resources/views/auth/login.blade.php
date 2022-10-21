@@ -226,9 +226,15 @@
               </p>
               <hr>
               <p class="text-left">
-                <span>Lupa password ? </span>
                 <a href="/lupa-password-login">
-                  <span>click here</span>
+                  <span>Lupa password</span>
+                </a>
+                <br>
+              </p>
+              <span> atau </span>
+              <p>
+                <a href="/pemulihan-akun">
+                  <span>Pemulihan nomor telepon</span>
                 </a>
               </p>
             </div>

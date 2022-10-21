@@ -101,7 +101,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login Kelembagaan</title>
+    <title>Lupa Password</title>
 
     <link rel="icon" type="image/x-icon" href="{{asset('tumbreg.jpeg')}}" />
 
@@ -258,11 +258,14 @@
                 <a href="/register">
                   <span> Buat Akun Baru</span>
                 </a>
-                <span>/</span>
-                <a href="/login">
-                    <span> Login ke Lembaga</span>
-                  </a>
+                
               </p>
+              <span>atau</span>
+                <p class="text-left">
+                    <a href="/login">
+                        <span> Login ke Lembaga</span>
+                    </a>
+                </p>
               <hr>
             </div>
           </div>
@@ -349,7 +352,7 @@
                 success: function(response) {
                     if (response.status == 200) {
                         $("#formlupapass")[0].reset();
-                        $('#btnlupapass').val('Kirim Lupa Password');
+                        $('#btnlupapass').val('Konfirmasi Lupa Password');
                         $('#btnlupapass').attr('disabled', false);
                         toastr.success(response.message);
                         swal({
@@ -363,7 +366,7 @@
                         });
                     } else {
                         
-                        $('#btnlupapass').val('Kirim Lupa Password');
+                        $('#btnlupapass').val('Konfirmasi Lupa Password');
                         $('#btnlupapass').attr('disabled', false);
                         toastr.error(response.message);
                         swal({

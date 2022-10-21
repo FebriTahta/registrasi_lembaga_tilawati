@@ -34,7 +34,7 @@ class RegisterCont extends Controller
             'pass'              => 'required',
             'alamat_lembaga'    => 'required',
             'jenjang_pendidikan'=> 'required',
-            'satuan_pendidikan' => 'required',
+            // 'satuan_pendidikan' => 'required',
             'kabupaten_id'      => 'required',
         ]);
 
@@ -48,12 +48,13 @@ class RegisterCont extends Controller
 
         }else {
             $exist = Lembagasurvey::where('telp_lembaga', $request->telp_lembaga)->first();
+            $aksesexist = Akseslembaga::where('username', $request->nama_lembaga)->where('pass', $request->pass)->count();
 
             if (substr($request->telp_lembaga,0,2) !== '08' || strlen($request->telp_lembaga) < 10 || strlen($request->telp_lembaga) > 13) {
                 # code...
                 return response()->json([
                     'status' => 400,
-                    'message'  => 'Pastikan nomor telepon anda benar dan terhubung dengan whatsapp diawali (08 dan tidak lebih dari 13 angka)',
+                    'message'  => 'Pastikan nomor telepon anda benar dan terhubung dengan whatsapp diawali (08 dan tidak lebih dari 13 angka & terdaftar dalam provider indonesia)',
                 ]);
 
             }elseif ($exist !== null) {
@@ -63,7 +64,14 @@ class RegisterCont extends Controller
                     'message'  => 'Nomor telepon / whatsapp sudah terdaftar',
                 ]);
 
-            }else {
+            }elseif ($aksesexist > 0) {
+                # code...
+                return response()->json([
+                    'status' => 400,
+                    'message'  => 'Gunakan password lain dengan perpaduan karakter dan angka',
+                ]);
+            }
+            else {
                 # code...
                 $pool1   = '0123456789';
                 $pool2   = '9876543210';
@@ -73,6 +81,17 @@ class RegisterCont extends Controller
 
                 $kabupaten = Kabupaten::findOrFail($request->kabupaten_id);
                 $lembaga_exist_kode = Lembagasurvey::where('kode',$acak3)->first();
+
+                //jenjang & satuan pendidikan
+                $satuan_pendidikan;
+                if ($request->jenjang_pendidikan == 'formal') {
+                    # code...
+                    $satuan_pendidikan = $request->satuan_pendidikan_formal;
+                }else {
+                    # code...
+                    $satuan_pendidikan = $request->satuan_pendidikan_non_formal;
+                }
+            
                 if ($lembaga_exist_kode == null) {
                     # code...
                     $akses  = Akseslembaga::updateOrCreate(
@@ -98,7 +117,7 @@ class RegisterCont extends Controller
                             'alamat_lembaga'    => $request->alamat_lembaga,
                             'telp_lembaga'      => $request->telp_lembaga,
                             'jenjang_pendidikan'=> $request->jenjang_pendidikan,
-                            'satuan_pendidikan' => $request->satuan_pendidikan,
+                            'satuan_pendidikan' => $satuan_pendidikan,
                             'kabupaten_id'      => $request->kabupaten_id,
                             'provinsi_id'       => $kabupaten->provinsi_id,
                             'akseslembaga_id'   => $akses->id,
@@ -132,7 +151,7 @@ class RegisterCont extends Controller
                             'alamat_lembaga'    => $request->alamat_lembaga,
                             'telp_lembaga'      => $request->telp_lembaga,
                             'jenjang_pendidikan'=> $request->jenjang_pendidikan,
-                            'satuan_pendidikan' => $request->satuan_pendidikan,
+                            'satuan_pendidikan' => $satuan_pendidikan,
                             'kabupaten_id'      => $request->kabupaten_id,
                             'provinsi_id'       => $kabupaten->provinsi_id,
                             'akseslembaga_id'   => $akses->id,

@@ -62,11 +62,11 @@ class GuruCont extends Controller
                                         # code...
                                         $btn  = ' <button style="width:70px;" class="btn btn-sm btn-primary mb-1" data-toggle="modal" data-target="#modallihat"
                                         data-id="'.$data->id.'" data-nama="'.$data->nama_guru.'" data-telp="'.$data->telp_guru.'" data-tanggal="'.\Carbon\Carbon::parse($data->tanggal_lahir_guru)->format('Y-m-d').'" data-tempat="'.$data->tempat_lahir_guru.'"
-                                        data-alamat="'.$data->alamat_guru.'">lihat</button> ';
+                                        data-alamat="'.$data->alamat_guru.'">edit</button> ';
                                     }else{
                                         $btn  = ' <button style="width:70px" class=" mb-1 btn btn-sm btn-primary" data-toggle="modal" data-target="#modallihat"
                                         data-id="'.$data->id.'" data-nama="'.$data->nama_guru.'" data-telp="'.$data->telp_guru.'" data-tanggal="'.$data->tanggal_lahir_guru.'" data-tempat="'.$data->tempat_lahir_guru.'"
-                                        data-alamat="'.$data->alamat_guru.'">lihat</button> ';
+                                        data-alamat="'.$data->alamat_guru.'">edit</button> ';
                                     }
                                     
                                     $btn .= ' <button style="width:70px" class="mb-1 btn btn-sm btn-danger" data-toggle="modal" data-target="#modalhapus" data-id="'.$data->id.'" data-nama="'.$data->nama_guru.'">hapus</button> ';

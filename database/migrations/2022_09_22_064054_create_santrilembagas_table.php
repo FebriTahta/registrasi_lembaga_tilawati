@@ -23,6 +23,7 @@ class CreateSantrilembagasTable extends Migration
             $table->string('nama_wali_santri')->nullable();
             $table->string('telp_wali_santri')->nullable();
             $table->longText('alamat_santri')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

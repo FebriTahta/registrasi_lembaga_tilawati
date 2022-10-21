@@ -180,7 +180,12 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="#" data-bs-toggle="modal" data-bs-target="#modalcabang" class="menu-link">
-                    <div data-i18n="Basic">Daftar Santri</div>
+                    <div data-i18n="Basic">Daftar Santri Aktif</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#modalcabang" class="menu-link">
+                    <div data-i18n="Basic">Daftar Santri Lulus</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -193,7 +198,12 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="/daftar-santri" class="menu-link">
-                    <div data-i18n="Basic">Daftar Santri</div>
+                    <div data-i18n="Basic">Daftar Santri Aktif</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="/daftar-santri-lulus" class="menu-link">
+                    <div data-i18n="Basic">Daftar Santri Lulus</div>
                   </a>
                 </li>
                 <li class="menu-item">
